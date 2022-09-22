@@ -1,0 +1,35 @@
+@import "../../shared/styles/variables.scss";
+.wrapper{
+    width: 100%;
+    #cercle {
+        height: 40rem;
+        height: 32rem;
+        border-radius: 0% 0% 80% 99%;
+        margin-bottom: -29rem;
+    }
+    .title{
+        text-align: center;
+        margin-top: 3rem;
+        margin-bottom: 8rem;
+    }
+    
+.block{
+    width: 50%;
+    text-align: justify;
+    margin: auto;
+    padding: 6rem;
+    border-radius: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+   
+    p{
+        margin-top: 4rem;
+        font-weight: bold;
+    }
+    .sub_title{
+        float: right;
+    }
+    .sub{
+        margin-left: 1rem;
+    }
+}
+}

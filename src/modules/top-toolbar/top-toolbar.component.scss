@@ -1,0 +1,27 @@
+.toolbar-wrapper {
+    position: absolute;
+    width: 100%;
+    background: whitesmoke;
+    border-bottom: 1px solid #dedede;
+}
+
+mat-toolbar {
+    // position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    color: rgb(29, 29, 29);
+
+}
+
+mat-toolbar button {
+    font-size: 15px;
+    font-weight: normal;
+    margin-right: 5px;
+}
+
+
+mat-icon {
+    font-size: 20px;
+}

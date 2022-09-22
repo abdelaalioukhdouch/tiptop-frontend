@@ -1,0 +1,38 @@
+<header></header>
+<div class="container">
+	<div class="contact-form">
+		<div class="contact-wrap">
+
+			<form method="POST" id="contactForm" name="contactForm">
+				<span class="title">Veuillez renseigner votre numéro de ticket</span>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<input name="code" [(ngModel)]="code" class="form-control" id="code" maxlength="10"
+								placeholder="Numéro de ticket">
+
+							<small *ngIf="err" class="text-danger">
+								{{err}}
+							</small>
+							<small *ngIf="apiData" class="text-success">
+								{{apiData.message}}
+							</small>
+						</div>
+					</div>
+					<div class="col-md-12" style="text-align: center;">
+						<div class="form-group">
+							<input type="button" value="Envoyer" class="btn" (click)="consume()" [disabled]="waiting">
+							<div class="submitting" *ngIf="waiting">
+								<div class="spinner-border" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<footer></footer>

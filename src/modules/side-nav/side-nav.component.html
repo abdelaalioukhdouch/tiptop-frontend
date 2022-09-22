@@ -1,0 +1,16 @@
+<div class="flex">
+  <div class="m-nav ">
+    <div class="scroallbox-content">
+      
+      <button mat-button class="m-nav-item" [class.active]="sideNavButton._id == selectedNavItem"
+        *ngFor="let sideNavButton of config.sideNavButtons;" (click)="sideNavButtonClicked($event, sideNavButton);">
+        <div class="flex-column align-center">
+          <span class="m-btn-svg" [innerHTML]="sideNavButton.svg | safeHtml">
+          </span>
+          <span class="m-btn-title">{{sideNavButton.title}}</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,87 @@
+<div class="wrapper">
+    <div class="left_part">
+        <div class="background_container">
+            <img src="../../../assets/img/back.jpg" />
+        </div>
+        <div class="logo_container">
+            <img src="../../../assets/img/logos/tiptoplogowhite.png" />
+        </div>
+    </div>
+
+    <div class="right_part">
+
+        <div class="title">
+            <div class="line">Bienvenue !</div>
+            <div class="line">Créez votre compte</div>
+        </div>
+             
+        <div class="stepper_container">
+            <form [formGroup]="signupForm"  novalidate>
+                <div class="step_container">
+                    <!-- Civilité -->
+                    <div class="line_split_one">
+                        <mat-form-field appearance="outline" color="primary" class="mat_form_field_custom">
+                            <mat-label>Civilité</mat-label>
+                            <input matInput placeholder="Civilité" required formControlName="gender" name="gender">
+                        </mat-form-field>
+                    </div>
+                    <!-- Nom Prenom -->
+                    <div class="line_split_two">
+                        <mat-form-field appearance="outline" color="primary" class="mat_form_field_custom">
+                            <mat-label>Nom</mat-label>
+                                <input matInput placeholder="Nom" required formControlName="name" name="name">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" color="primary" class="mat_form_field_custom">
+                            <mat-label>Prenom</mat-label>
+                                <input matInput placeholder="Prenom"
+                                    formControlName="firstName" required
+                                    name="firstName">
+                        </mat-form-field>
+                    </div>
+                 <div class="line_split_one">
+                        <mat-form-field appearance="outline" color="primary" class="mat_form_field_custom">
+                            <mat-label>Adresse</mat-label>
+                            <input matInput placeholder="Adresse" formControlName="address" required name="address">
+                        </mat-form-field>
+                    </div>
+                    <!-- Email -->
+                    <div class="line_split_one">
+                        <mat-form-field appearance="outline" color="primary" class="mat_form_field_custom">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="Email" formControlName="email" required name="email">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Mot de passe -->
+                    <div class="line_split_two">
+                        <mat-form-field appearance="outline" color="primary" class="mat_form_field_custom">
+                            <mat-label>Mot de passe</mat-label>
+                                <input matInput placeholder="Mot de passe" formControlName="password" required
+                                    name="password">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" color="primary" class="mat_form_field_custom">
+                            <mat-label>Confirmation du Mot de passe</mat-label>
+                                <input matInput placeholder="Confirmation du Mot de passe"
+                                    formControlName="confirm_password"  required
+                                    name="confirm_password">
+                        </mat-form-field>
+                    </div>
+                       <!-- Adresse -->
+                </div>
+
+               <div class="line_split_one">
+                    <ng-container>
+                        <button  [disabled]="!signupForm.valid" mat-raised-button type="button" 
+                            (click)="signup()">
+                            Commencer
+                        </button>
+                    </ng-container>
+                                
+                </div>
+            </form>
+        </div>
+     
+    </div>
+</div>

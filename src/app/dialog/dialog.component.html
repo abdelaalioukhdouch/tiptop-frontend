@@ -1,0 +1,24 @@
+<div class="pd-10">
+  <div mat-dialog-title>
+    <i class="success fa fa-check-circle" *ngIf="dialogType == 'success'"></i>
+    <i class="red fa fa-times-circle" *ngIf="dialogType == 'error'"></i>
+    <i class="info-icon fa fa-info-circle" *ngIf="dialogType == 'info'"></i>
+    <i class="warn fa fa-exclamation-triangle" *ngIf="dialogType == 'warn' || dialogRole == 'confirm'"></i>
+    <h2>{{title}} {{showPoropAtTitlePrefix || ''}}</h2>
+    <h6 *ngIf="subTitle" [class.scroll-container-dialog]="dialogRole == 'info'" [innerHTML]="subTitle | safeHtml"></h6>
+  </div>
+  <div class="align-end">
+    <ng-container *ngIf="dialogRole == 'confirm'">
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="primary">
+        {{saveBtnTxt ? saveBtnTxt :
+        'Confirm'}}
+      </button>
+      <button mat-button mat-dialog-close>{{cancelBtnTxt ? cancelBtnTxt :
+        'Cancel'}}</button>
+    </ng-container>
+    <ng-container *ngIf="dialogRole == 'info'">
+      <button mat-button mat-dialog-close color="primary" cdkFocusInitial>{{cancelBtnTxt ? cancelBtnTxt :
+        'Ok'}}</button>
+    </ng-container>
+  </div>
+</div>

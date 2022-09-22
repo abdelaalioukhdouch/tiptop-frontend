@@ -1,0 +1,75 @@
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.flex-center {
+    display: flex;
+    align-items: center;
+
+    >svg {
+        margin-right: 10px;
+    }
+}
+
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-content-center {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-column {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.align-start {
+    align-items: flex-start;
+}
+
+.flex {
+    display: flex;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.pd-5 {
+    padding: 5px;
+}
+
+.pd-0 {
+    padding: 0 !important;
+}
+
+.pdlr-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+strong {
+    font-weight: 500;
+}

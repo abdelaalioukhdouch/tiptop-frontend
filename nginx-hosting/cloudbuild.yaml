@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+
+  args: 'build', '-t', 'gcr.io/jovial-branch-357613/container', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: 'push', 'gcr.io/jovial-branch-357613/container'
+images: 'gcr.io/jovial-branch-357613/container']
