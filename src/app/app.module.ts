@@ -35,6 +35,7 @@ import { LoaderInterceptor } from '../interceptors/loader-interceptor.service';
 import { TokenInterceptor } from '../interceptors/token.interceptor';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { NewsletterView } from 'src/views/newsletter/newsletter.view';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
     LegalsInformations,
     PrivacyPolicy,
     ContactView,
+    NewsletterView,
     
     //DIALOGS
     LoginDialog,
