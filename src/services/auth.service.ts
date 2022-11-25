@@ -8,6 +8,7 @@ import { first, catchError, tap, map } from 'rxjs/operators';
 import { ErrorHandlerService } from "./error-handler.service";
 import { User } from "src/models/User";
 import { CacheHandler } from '../utils/cache-handler';
+import { environment } from "src/environments/environment";
 
 
 @Injectable({
@@ -15,7 +16,7 @@ import { CacheHandler } from '../utils/cache-handler';
 })
 export class AuthService {
   // changed it to our local server 8080
-  private url = "http://localhost:8080/api";
+  private url = environment.apiUrl;
   private isAuthenticated = false;
   //private token: string;
   private tokenTimer: any;
