@@ -10,6 +10,11 @@ import { User } from "src/models/User";
 import { CacheHandler } from '../utils/cache-handler';
 import { environment } from "src/environments/environment";
 
+interface LoginResponse {
+  token: string;
+  userId: Pick<User, "id_user">;
+  user: User;
+}
 
 @Injectable({
   providedIn: "root",
@@ -22,10 +27,11 @@ export class AuthService {
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
   public err = new BehaviorSubject<any>(null);
-
+  private currentUser: any;
 
   isUserLoggedIn$ = new BehaviorSubject<boolean>(false);
   userId: Pick<User, "id_user">;
+
 
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
@@ -33,6 +39,7 @@ export class AuthService {
 
   public baseUrl = '';
   public token: String = '';
+  public user: [];
   public headers: any;
   __isHttpWaiting = false;
 
@@ -42,6 +49,28 @@ export class AuthService {
     private router: Router,
     // private toastr: ToastrService
   ) { }
+
+// Store user data upon login
+saveUserData(userData: any) {
+  localStorage.setItem('userData', JSON.stringify(userData));
+}
+
+ // Retrieve user data
+ getUserData() {
+  const userData = localStorage.getItem('userData');
+  return userData ? JSON.parse(userData) : null;
+}
+
+getCurrentUser() {
+  const user = localStorage.getItem('currentUser');
+  return user ? JSON.parse(user) : null;
+}
+
+// Method to get the current user's role
+getUserRole(): string {
+  // Assuming the user object has a 'role' property
+  return this.currentUser?.role;
+}
 
   getToken() {
     return this.token;
@@ -54,6 +83,7 @@ export class AuthService {
   getUserId() {
     return this.userId;
   }
+
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
@@ -67,32 +97,42 @@ export class AuthService {
         catchError(this.errorHandlerService.handleError<User>("signup"))
       );
   }
+  clearLocalStorage() {
+    localStorage.clear();
+  }
 
   login(
     email: Pick<User, "email">,
     password: Pick<User, "password">
   ): Observable<{
     token: string;
-    // role: string;
+    user: User;
     userId: Pick<User, "id_user">;
   }> {
     return this.http
       .post(`${this.url}/auth/login`, { email, password }, this.httpOptions)
       .pipe(
         first(),
-        tap((tokenObject: { token: string; userId: Pick<User, "id_user"> }) => {
+        tap((tokenObject: LoginResponse)=> {
           this.userId = tokenObject.userId;
+          this.clearLocalStorage();
+
+          localStorage.setItem("role", tokenObject.token);
+          localStorage.setItem("token", "your_new_token");
+          localStorage.setItem("userId", "your_new_userId");
           localStorage.setItem("token", tokenObject.token);
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
           CacheHandler.storeLoginData(tokenObject);
           this.isUserLoggedIn$.next(true);
-          this.router.navigate(["home"]);
+          this.router.navigate(["/home"]);
+          
         }),
         catchError(
           this.errorHandlerService.handleError<{
             token: string;
             userId: Pick<User, "id_user">;
+            user: User;
           }>("login")
         )
       );
@@ -262,17 +302,25 @@ export class AuthService {
 
 
   logout() {
+    localStorage.clear();
+
     this.token = null;
+    this.user = null;
+
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.router.navigate(["/"]);
+    this.clearLocalStorage();
+
+    this.router.navigate(["/login"]);
   }
   private clearAuthData() {
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");
     localStorage.removeItem("userId");
+    localStorage.removeItem("role");
+    localStorage.removeItem("user");
 
     localStorage.removeItem("profile");
     localStorage.removeItem("uname");

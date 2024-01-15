@@ -10,6 +10,10 @@ import { ProfileService } from 'src/services/profile.service';
 
 export class HomeComponent implements OnInit {
     userIsAuthenticated = false;
+    currentUser: any;
+    userRole: string;
+
+
     profileisSet = false
 
     model = {
@@ -22,6 +26,11 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.profileisSet = this.profileService.getIsProfileSet()
+        this.currentUser = this.authService.getUserData();
+        this.userRole = this.currentUser?.user?.role;
+
+
+        console.log('test', this.userRole)
 
         this.userIsAuthenticated = this.authService.getIsAuth();
       if (this.userIsAuthenticated) {

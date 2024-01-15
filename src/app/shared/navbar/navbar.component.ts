@@ -1,5 +1,5 @@
 import { ProfileService } from 'src/services/profile.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location} from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,10 +15,13 @@ import { AuthService } from 'src/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
+  currentUser: any;
+
   isMenuCollapsed = true;
 
     public isCollapsed = true;
     userIsAuthenticated = false;
+    userRole: string;
     private authListenerSubs: Subscription;
     profile: any;
     username: string
@@ -27,7 +30,7 @@ export class NavbarComponent implements OnInit {
     //private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
 
-    constructor(private authService: AuthService, private profileService: ProfileService,public dialog: MatDialog,public location: Location, private router: Router) {
+    constructor(private cdRef: ChangeDetectorRef, private authService: AuthService, private profileService: ProfileService,public dialog: MatDialog,public location: Location, private router: Router) {
     }
 
     getPath(){
@@ -38,6 +41,9 @@ export class NavbarComponent implements OnInit {
   }
 
     ngOnInit() {
+      this.currentUser = this.authService.getUserData();
+      //this.userRole = this.authService.getUserRole();
+
       this.profileisSet = this.profileService.getIsProfileSet()
       this.userIsAuthenticated = this.authService.getIsAuth();
       if (this.userIsAuthenticated) {
@@ -52,12 +58,17 @@ export class NavbarComponent implements OnInit {
             this.getProfile()
           }
         });
+     this.userRole = this.currentUser?.user?.role;
+
+
+        console.log('test', this.userRole)
     }
 
     getProfile() {
       this.profileService.getProfileByCreatorId().subscribe(prof => {
         this.profileisSet = true
         this.username = prof.profile.username
+        this.userRole = prof.profile.role
         this.profile = {
           id: prof.profile._id,
           username: prof.profile.username,
@@ -78,6 +89,8 @@ export class NavbarComponent implements OnInit {
 
     onLogout() {
       this.authService.logout();
+      this.cdRef.detectChanges();
+
     }
 
     logIn(): void {

@@ -1,5 +1,5 @@
 import { isNullOrUndefined } from 'util';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -19,10 +19,13 @@ export class LoginDialog implements OnInit {
   loginForm: FormGroup;
   loginSuccessMessage: string;
 
+  userRole: any | null = null;;
+
+
 
   constructor(private authService: AuthService, private dialog: MatDialog,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute) {
+    private _activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef) {
     /* this.loginForm = new FormGroup({
       email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required)
@@ -74,7 +77,12 @@ export class LoginDialog implements OnInit {
         .subscribe(res => {
           if(res) {
             this.loginSuccessMessage = "Vous êtes connecté"; // Set the success message
-            this._router.navigate(['/']);
+            this.authService.saveUserData(res);
+            this.userRole = res.user.role;
+            //console.log(res)
+            this._router.navigate(['/home']);
+            localStorage.setItem("token", "your_new_token");
+            localStorage.setItem("userId", "your_new_userId");
   
             // Hide the message after 3 seconds
             of(null).pipe(delay(1100)).subscribe(() => {
@@ -82,6 +90,7 @@ export class LoginDialog implements OnInit {
               this.dialog.closeAll();
 
             });
+            this.cdRef.detectChanges();
           } else {
             alert("Unauthenticated. Try again!");
           }
