@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { CacheHandler } from '../../utils/cache-handler';
 import { LoaderService } from './../../services/loader.service';
 import { AuthService } from '../../services/auth.service';
+import { Location } from '@angular/common';
+
 
 
 @Component({
@@ -23,7 +25,8 @@ export class TopToolbarComponent implements OnInit {
     private dialog: MatDialog,
     private loaderService: LoaderService,
     private router: Router,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private location: Location
   ) {
 
     this.loaderService.isLoading.subscribe((v) => {
@@ -46,6 +49,10 @@ export class TopToolbarComponent implements OnInit {
     // this.openBottomSheetExport('main');
     // this.onClickLogin();
     // this.openBottonSheetMobileToolbar();
+  }
+
+  goBack() {
+    this.location.back(); // Utilise la fonction back() de Location pour revenir en arrière
   }
 
   logout() {

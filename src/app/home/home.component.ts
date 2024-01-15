@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/services/auth.service';
+import { ProfileService } from 'src/services/profile.service';
 
 @Component({
     selector: 'app-home',
@@ -7,13 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class HomeComponent implements OnInit {
+    userIsAuthenticated = false;
+    profileisSet = false
+
     model = {
         left: true,
         middle: false,
         right: false
     };
 
-    constructor() { }
+    constructor(private authService: AuthService, private profileService: ProfileService) { }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.profileisSet = this.profileService.getIsProfileSet()
+
+        this.userIsAuthenticated = this.authService.getIsAuth();
+      if (this.userIsAuthenticated) {
+        // this.getProfile()
+      }
+    }
 }

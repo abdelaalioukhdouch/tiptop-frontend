@@ -73,6 +73,7 @@ export class AuthService {
     password: Pick<User, "password">
   ): Observable<{
     token: string;
+    // role: string;
     userId: Pick<User, "id_user">;
   }> {
     return this.http

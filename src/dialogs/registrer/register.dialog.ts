@@ -21,6 +21,22 @@ export class RegisterDialog implements OnInit {
     this.signupForm = this.createFormGroup();
   }
 
+  get passwordErrors() {
+    const passwordControl = this.signupForm.get('password');
+
+    if (passwordControl.errors?.['required']) {
+      return 'Un mot de passe est requis.';
+    } else if (passwordControl.errors?.['minlength']) {
+      return 'Le mot de passe doit contenir au moins 8 caractères.';
+    } else if (passwordControl.errors?.['pattern']) {
+      return 'Le mot de passe doit contenir au moins une majuscule, une minuscule, et un chiffre.';
+    }
+
+    return null;
+  }
+
+  
+
   createFormGroup(): FormGroup {
     return new FormGroup({
       gender: new FormControl("" ,[Validators.required, Validators.minLength(2)]),
@@ -30,11 +46,12 @@ export class RegisterDialog implements OnInit {
       email: new FormControl("", [Validators.required, Validators.email]),
       password: new FormControl("", [
         Validators.required,
-        Validators.minLength(7),
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ]),
       confirm_password: new FormControl("", [
-        Validators.required,
-        Validators.minLength(7),
+        Validators.required
+        // Ajouter ici un validateur personnalisé pour la confirmation du mot de passe si nécessaire
       ]),
     });
   }

@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegisterDialog } from '../registrer/register.dialog';
 import { AuthService } from 'src/services/auth.service';
+import { delay, of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,8 @@ export class LoginDialog implements OnInit {
   hide = "password";
 
   loginForm: FormGroup;
+  loginSuccessMessage: string;
+
 
   constructor(private authService: AuthService, private dialog: MatDialog,
     private _router: Router,
@@ -67,19 +70,24 @@ export class LoginDialog implements OnInit {
 
   login(): void {
     this.authService
-      .login(this.loginForm.value.email, this.loginForm.value.password)
-      .subscribe(res => {
-        if(res) {
-          this._router.navigate(['/']);
-          this.dialog.closeAll();
-          alert("You are logged in");
-        } else {
-          
-          alert("Unauthenticated. Try again!");
-        }
-      });
-    console.log("user");
-  }
+        .login(this.loginForm.value.email, this.loginForm.value.password)
+        .subscribe(res => {
+          if(res) {
+            this.loginSuccessMessage = "Vous êtes connecté"; // Set the success message
+            this._router.navigate(['/']);
+  
+            // Hide the message after 3 seconds
+            of(null).pipe(delay(1100)).subscribe(() => {
+              this.loginSuccessMessage = null;
+              this.dialog.closeAll();
+
+            });
+          } else {
+            alert("Unauthenticated. Try again!");
+          }
+        });
+}
+
 
   movetoregister() {
     this._router.navigate(['../register'], { relativeTo: this._activatedRoute });

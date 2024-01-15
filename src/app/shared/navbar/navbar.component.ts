@@ -7,23 +7,35 @@ import { LoginDialog } from 'src/dialogs/login/login.dialog';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/services/auth.service';
 
+
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+
+  isMenuCollapsed = true;
+
     public isCollapsed = true;
     userIsAuthenticated = false;
     private authListenerSubs: Subscription;
     profile: any;
     username: string
     profileisSet = false
+    userIsAdmin = false;
     //private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
 
     constructor(private authService: AuthService, private profileService: ProfileService,public dialog: MatDialog,public location: Location, private router: Router) {
     }
+
+    getPath(){
+      return this.router.url;
+    }
+    scroll(el: HTMLElement) {
+      el.scrollIntoView();
+  }
 
     ngOnInit() {
       this.profileisSet = this.profileService.getIsProfileSet()
@@ -41,6 +53,7 @@ export class NavbarComponent implements OnInit {
           }
         });
     }
+
     getProfile() {
       this.profileService.getProfileByCreatorId().subscribe(prof => {
         this.profileisSet = true
@@ -50,8 +63,11 @@ export class NavbarComponent implements OnInit {
           username: prof.profile.username,
           bio: prof.profile.bio,
           imagePath: prof.profile.imagePath,
-          creator: prof.profile.creator
+          creator: prof.profile.creator,
+          role: prof.profile.role
         };
+        this.userIsAdmin = this.profile.role === 'admin';
+
       },
         err => {
           this.profileisSet = false

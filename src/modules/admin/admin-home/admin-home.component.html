@@ -1,9 +1,12 @@
 <app-top-toolbar></app-top-toolbar>
-<div class="main-wrapper">
+<div class="main-wrapper d-flex">
     <div class="side-nav">
         <app-side-nav [config]="sideNavConfig"></app-side-nav>
     </div>
-    <div class="content">
+    <div class="content flex-grow-1 position-relative">
         <router-outlet></router-outlet>
+        <div class="background-with-title d-flex justify-content-center align-items-center w-100 h-100 position-absolute">
+            <img src="../assets/img/back.jpg" alt="" class="background-image">
+        </div>
     </div>
 </div>

@@ -53,3 +53,28 @@ export const ticketsRouteData: RouteData = {
         perPage: 20
     },
 }
+
+export const gainsRouteData: RouteData = {
+
+    pageTitle: `Gains`,
+    selectedNavItem: 'Gains',
+    fetchUrl: `${Appsettings.API_ENDPOINT}/gain`,
+    fetchQueryStatic: `admin=true`,
+    formModel: [
+        { name: 'Status', placeholder: 'Status', type: 'text' }
+    ],
+    primaryKey: `_id`,
+    addFormTitle: `Add Ticket`,
+    editFormTitle: `Edit Ticket`,
+    addButtonTitle: `Add New Ticket`,
+
+    viewMainTitleField: 'title',
+
+    pagination: {
+        responseField: 'data',
+        perPageField: 'perPage',
+        pageField: 'page',
+        countField: 'count',
+        perPage: 20
+    },
+}

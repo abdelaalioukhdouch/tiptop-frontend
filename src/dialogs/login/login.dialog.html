@@ -1,5 +1,10 @@
+
 <div class="wrapper">
-    <div class="left_part">
+<!-- Success Message -->
+<div *ngIf="loginSuccessMessage" class="success-message">
+  {{ loginSuccessMessage }}
+</div>
+    <div class="left_part d-none d-lg-block">
         <div class="background_container">
             <img src="../../../assets/img/back.jpg" />
         </div>
@@ -32,10 +37,7 @@
                 </div>
 
                 <div class="footer">
-                    <div class="register" (click)="register()">Nouveau client ? Je m'inscrit</div>
-                    <div class="informations">
-                        En vous inscrivant, vous accepter nos <span>Conditions d'utilisation</span> et vous reconnaissez avoir lu notre <span>Politique de confidentialité</span>
-                    </div>
+                    <div class="register" (click)="register()">S'inscrire</div>
                 </div>
             </div>
         </form>

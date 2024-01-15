@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="left_part">
+    <div class="left_part d-none d-lg-block">
         <div class="background_container">
             <img src="../../../assets/img/back.jpg" />
         </div>
@@ -56,10 +56,15 @@
                     <!-- Mot de passe -->
                     <div class="line_split_two">
                         <mat-form-field appearance="outline" color="primary" class="mat_form_field_custom">
-                            <mat-label>Mot de passe</mat-label>
-                                <input matInput placeholder="Mot de passe" formControlName="password" required
-                                    name="password">
-                        </mat-form-field>
+  <mat-label>Mot de passe</mat-label>
+  <input matInput placeholder="Mot de passe" type="password" formControlName="password">
+  <mat-error *ngIf="passwordErrors">
+    {{ passwordErrors }}
+  </mat-error>
+</mat-form-field>
+
+
+
 
                         <mat-form-field appearance="outline" color="primary" class="mat_form_field_custom">
                             <mat-label>Confirmation du Mot de passe</mat-label>

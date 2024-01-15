@@ -13,6 +13,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
 import { AuthGuard } from '../services/auth-guard.service';
 import { NewsletterView } from 'src/views/newsletter/newsletter.view';
+import { DetailsView } from 'src/views/details/details-jeu';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'legals-informations', component: LegalsInformations },
       { path: 'participate', component: ParticipateComponent },
       { path: 'contact', component: ContactView },
+      { path: 'details-jeu', component: DetailsView },
       { path: 'newsletter', component: NewsletterView },
 
       // { path: '', pathMatch: 'full', redirectTo: 'add-user' },

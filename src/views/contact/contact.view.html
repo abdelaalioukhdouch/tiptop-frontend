@@ -35,6 +35,14 @@
 							<textarea name="message" class="form-control" id="message" cols="30" rows="7" placeholder="Votre message"></textarea>
 						</div>
 					</div>
+
+					<!-- Widget reCAPTCHA -->
+  					<div class="g-recaptcha" data-sitekey="6LcPhkgpAAAAAOaJyAYQaPAjL2hXb74_TFHaz4b5"></div>
+<button class="g-recaptcha" 
+        data-sitekey="reCAPTCHA_site_key" 
+        data-callback='onSubmit' 
+        data-action='submit'>Submit</button>
+
 					<div class="col-md-12" style="text-align: center;">
 						<div class="form-group">
 							<input type="submit" value="Envoyer" class="btn">
@@ -46,4 +54,5 @@
 		</div>
 	</div>
 </div>
+ <script src="https://www.google.com/recaptcha/api.js"></script>
 <footer></footer>

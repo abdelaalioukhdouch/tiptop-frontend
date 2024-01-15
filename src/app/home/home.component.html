@@ -21,7 +21,7 @@
             <div class="col-lg-6 text-center">
               <img src="./assets/img/teahome.png" style="width: 200px;" class="img-fluid">
               <p class="lead text-white">Des thés de qualité pour votre plus grand plaisir</p>
-              <div class="btn-wrapper mt-5">
+              <div *ngIf="userIsAuthenticated" class="btn-wrapper mt-5">
                 <a routerLink="/participate" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
                   <span class="btn-inner--icon"><i class="ni ni-trophy"></i></span>
                   <span class="btn-inner--text">Je participe</span>

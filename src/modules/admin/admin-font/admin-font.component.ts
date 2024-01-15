@@ -9,6 +9,7 @@ import { RouteData } from '../routedata.interface';
 import { DashboardService } from '../../../services/dashboard.service';
 import { CustomFormComponent } from '../../shared/custom-form/custom-form.component';
 import { CustomFormModel } from '../../shared/custom-form/custom-form.model';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-font',
@@ -18,7 +19,13 @@ import { CustomFormModel } from '../../shared/custom-form/custom-form.model';
 export class AdminFontComponent implements OnInit, OnDestroy {
 
   apiData: any;
+  originalData: any;
 
+  allUsers: any[] = [];
+  filteredUsers: any[] = [];
+
+  searchCtrl = new FormControl();
+  
   _config: RouteData;
   @Input() set config(config: RouteData) {
     this._config = config;
@@ -45,6 +52,7 @@ export class AdminFontComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.originalData = this.apiData;
   }
 
   ngOnDestroy(): void {
@@ -72,6 +80,8 @@ export class AdminFontComponent implements OnInit, OnDestroy {
             this.apiData.data = this.apiData.data.concat(res[this.config.pagination.responseField]);
             this.apiData.page = res[this.config.pagination.pageField];
             this.noMoreRecords = false;
+            this.allUsers = res.data;
+            this.filteredUsers = res.data;
           } else {
             this.noMoreRecords = true;
           }
@@ -79,6 +89,16 @@ export class AdminFontComponent implements OnInit, OnDestroy {
       })
   }
 
+  filterUsers(): void {
+    const searchTerm = this.searchCtrl.value || '';
+    if (!searchTerm) {
+      this.filteredUsers = this.allUsers;
+    } else {
+      this.filteredUsers = this.allUsers.filter(user =>
+        user.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+  }
 
   addFont(record?: any, index?: number): void {
 

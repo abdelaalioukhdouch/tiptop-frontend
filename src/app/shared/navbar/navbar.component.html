@@ -1,11 +1,12 @@
-<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom headroom--top headroom--pinned">
-  <div class="container">
+<nav #target id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom headroom--top headroom--pinned">
+  <div dropdown-menu class="container">
     <a class="navbar-brand mr-lg-5" [routerLink]="['/home']">
       <img src="./assets/img/tea.png" alt="logo">
     </a>
-    <button class="navbar-toggler" type="button" aria-controls="navbar_global" aria-label="btn_menu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <button class="navbar-toggler" type="button" data-toggle="dropdown" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="btn_menu">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
     <div class="navbar-collapse collapse" id="navbar_global" >
       <div class="navbar-collapse-header">
         <div class="row">
@@ -15,8 +16,8 @@
           </div>
           <div class="col-6 collapse-close">
             <button type="button" class="navbar-toggler" aria-controls="navbar_global">
-              <span></span>
-              <span></span>
+              <span>2</span>
+              <span>2</span>
             </button>
           </div>
         </div>
@@ -25,46 +26,34 @@
         <li class="nav-item dropdown">
           <a class="nav-link no-caret" data-toggle="dropdown" role="button">
             <i class="ni ni-ui-04 d-lg-none"></i>
-            <span class="nav-link-inner--text">Le jeu-concours</span>
+            <span [routerLink]="['/home']" class="nav-link-inner--text">Le jeu-concours</span>
           </a>
-          <div class="dropdown-menu-xl dropdown-menu" >
+          <div  class="dropdown-menu-xl dropdown-menu" >
             <div class="dropdown-menu-inner">
-              <a routerLinkActive="active" [routerLink]="['documentation/tutorial']" class="media d-flex align-items-center">
-                <div class="icon icon-shape bg-gradient-primary rounded-circle text-white">
+              <a routerLinkActive="active" [routerLink]="['/details-jeu']" class="media d-flex align-items-center">
+                <div class="icon icon-shape bg-gradient-primary rounded-circle text-white d-none d-md-block">
                   <i class="ni ni-spaceship"></i>
                 </div>
                 <div class="media-body ml-3">
-                  <p class="description d-none d-md-inline-block mb-0">Tickets 100% gagnants</p>
+                  <p class="description d-md-inline-block mb-0">les règles du jeux</p>
                 </div>
               </a>
-              <a routerLinkActive="active" [routerLink]="['documentation/alerts']" class="media d-flex align-items-center">
-                <div class="icon icon-shape bg-gradient-warning rounded-circle text-white">
+              <a routerLinkActive="active" [routerLink]="['/home']" class="media d-flex align-items-center">
+                <div class="icon icon-shape bg-gradient-warning rounded-circle text-white d-none d-md-block">
                   <i class="ni ni-ui-04"></i>
                 </div>
                 <div class="media-body ml-3">
-                  <p class="description d-none d-md-inline-block mb-0">5 lots différents à gagner</p>
+                  <p class="description d-md-inline-block mb-0">5 lots différents à gagner</p>
                 </div>
               </a>
             </div>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link no-caret" data-toggle="dropdown" role="button">
-            <i class="ni ni-collection d-lg-none"></i>
-            <span class="nav-link-inner--text">Examples</span>
-          </a>
-          <div class="dropdown-menu">
-            <a [routerLink]="['/landing']" class="dropdown-item">Landing</a>
-            <a [routerLink]="['/user-profile']" class="dropdown-item">Profile</a>
-            <a [routerLink]="['/login']" class="dropdown-item">Login</a>
-            <!--<a [routerLink]="['/register']" class="dropdown-item">Register</a>-->
           </div>
         </li>
 
 <li class="nav-item dropdown" *ngIf="userIsAuthenticated">
           <a class="nav-link no-caret" data-toggle="dropdown" role="button">
             <i class="ni ni-collection d-lg-none"></i>
-            <span class="nav-link-inner--text" >Plus</span>
+            <span class="nav-link-inner--text" >Mon compte</span>
           </a>
           <div class="dropdown-menu">
             <a [routerLink]="['/admin']" class="dropdown-item">Dashboard</a>
@@ -102,16 +91,18 @@
           </a>
         </li>
         -->
-        <li class="nav-item d-none d-lg-block ml-lg-4">
-          <a target="_blank" class="btn btn-neutral btn-icon">
-            <span class="btn-inner--icon">
+        <li class="nav-item ml-lg-4">
+    <a class="btn btn-neutral btn-icon">
+        <span class="btn-inner--icon">
             <i class="icon-login"></i>
-            </span>
- <span class="nav-link-inner--text" *ngIf="!userIsAuthenticated" (click)="logIn()">Se connecter</span>
-            <span class="nav-link-inner--text" *ngIf="userIsAuthenticated" (click)="onLogout()">Se deconnecter</span>
-          </a>
-        </li>
+        </span>
+        <span class="nav-link-inner--text" *ngIf="!userIsAuthenticated" (click)="logIn()">Se connecter</span>
+        <span class="nav-link-inner--text" *ngIf="userIsAuthenticated" (click)="onLogout()">Se déconnecter</span>
+    </a>
+</li>
       </ul>
     </div>
   </div>
+
+  
 </nav>

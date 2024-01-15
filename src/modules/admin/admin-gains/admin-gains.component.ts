@@ -11,11 +11,11 @@ import { AdminService } from '../services/admin.service';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-admin-tickets-list',
-  templateUrl: './admin-tickets-list.component.html',
-  styleUrls: ['./admin-tickets-list.component.scss', '../admin-font/admin-font.component.scss']
+  selector: 'app-admin-gains',
+  templateUrl: './admin-gains.component.html',
+  styleUrls: ['./admin-gains.component.scss', '../admin-font/admin-font.component.scss']
 })
-export class AdminTicketsListComponent implements OnInit {
+export class AdminGainsComponent implements OnInit {
 
   apiData: any;
 

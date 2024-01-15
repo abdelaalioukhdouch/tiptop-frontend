@@ -43,9 +43,8 @@
 
 
     .right_part {
-        width: calc(60% - 4rem);
-        height: calc(100% - 10rem);
         padding: 3rem;
+        overflow: auto;
 
         .title {
             font-weight: bolder;
@@ -101,6 +100,7 @@
             .line_split_one{
                 text-align: center;
                 button{
+                    margin-top: 2rem;
                     color: $white;
                     background-color: $green;
             }

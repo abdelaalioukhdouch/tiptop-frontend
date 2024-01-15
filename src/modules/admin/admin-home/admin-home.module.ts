@@ -1,3 +1,4 @@
+import { gainsRouteData } from './../routedata.params';
 import { CustomFormModule } from './../../shared/custom-form/custom-form.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, Routes } from '@angular/router';
@@ -13,6 +14,7 @@ import { TopToolbarModule } from '../../top-toolbar/top-toolbar.module';
 import { SideNavModule } from '../../side-nav/side-nav.module';
 import { AdminTicketsListComponent } from '../admin-tickets-list/admin-tickets-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AdminGainsComponent } from '../admin-gains/admin-gains.component';
 
 const routes: Routes = [
   {
@@ -30,6 +32,15 @@ const routes: Routes = [
         component: AdminTicketsListComponent,
         data: {
           selectedNavItem: 'Tickets',
+          data: ticketsRouteData
+        }
+      },
+      {
+        path: 'gains',
+        component: AdminGainsComponent,
+        data: {
+          selectedNavItem: 'Gains',
+          data: gainsRouteData
         }
       }
     ]
@@ -53,6 +64,6 @@ const routes: Routes = [
     MatInputModule,
     ReactiveFormsModule
   ],
-  declarations: [AdminHomeComponent, AdminFontComponent, AdminTicketsListComponent]
+  declarations: [AdminHomeComponent, AdminFontComponent, AdminTicketsListComponent, AdminGainsComponent]
 })
 export class AdminHomeModule { }

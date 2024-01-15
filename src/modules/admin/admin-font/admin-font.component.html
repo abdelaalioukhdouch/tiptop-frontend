@@ -1,4 +1,10 @@
 <div class="pd-10" *ngIf="config">
+<div class="search-wrapper">
+    <mat-form-field appearance="fill">
+      <mat-label>Rechercher</mat-label>
+      <input matInput (keyup)="filterUsers()" placeholder="Entrez un nom..." [formControl]="searchCtrl">
+    </mat-form-field>
+  </div>
   <h1 class="flex-center">
     <label>
       {{config.pageTitle}}
@@ -8,7 +14,7 @@
   </h1>
   <div class="content-wrapper-scroll">
     <mat-accordion multi>
-      <mat-expansion-panel *ngFor="let item of apiData?.data;let itemIndex = index;"
+      <mat-expansion-panel *ngFor="let item of filteredUsers;let itemIndex = index;"
         [class.hightlight-anim]="item.animated" [class.editing]="item.editing">
         <mat-expansion-panel-header>
           <mat-panel-title>

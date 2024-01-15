@@ -1,14 +1,59 @@
 @import "../../shared/styles/variables.scss";
 
 .wrapper {
+   position: relative;/* Permet aux éléments enfants de passer à la ligne suivante sur les petits écrans */
+}
+
+.success-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    border: 3px solid #a8ff00;
+  background-color: #b3ffce; /* Couleur de fond */
+  padding: 15px;
+  border-radius: 10px;
+  z-index: 10; /* S'assurer qu'il s'affiche au-dessus des autres éléments */
+}
+
+/* Styles pour les petits écrans (par exemple, moins de 768px de large) */
+@media (max-width: 768px) {
+  .left_part, .right_part {
+      max-width: 100%; /* Chaque partie occupe 100% de la largeur sur les petits écrans */
+  }
+}
+
+/* Styles supplémentaires pour gérer la taille et le positionnement des images et des éléments de formulaire */
+.background_container img, .logo_container img {
+  width: 100%; /* Ajuste la largeur de l'image à la largeur du conteneur */
+  height: auto; /* Garde le ratio de l'image */
+}
+
+.form_data_container {
+  padding: 20px; /* Ajoute de l'espace autour des champs de formulaire */
+}
+
+.button_line button {
+  margin: 10px 0; /* Ajoute de l'espace autour des boutons */
+}
+
+/* Ajouter d'autres styles CSS ici pour améliorer le design et la mise en page */
+
+
+.wrapper {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-wrap: wrap;
 
   .left_part {
     width: 60%;
     height: 100%;
     position: relative;
+    flex: 1; /* Les deux parties prennent une part égale de l'espace disponible */
+  max-width: 50%;
 
     .background_container {
       width: 100%;
@@ -40,9 +85,8 @@
   }
 
   .right_part {
-    width: calc(60% - 4rem);
-    height: 100%;
     padding: 2rem;
+    flex: 1; /* Les deux parties prennent une part égale de l'espace disponible */
 
     .arrow_container {
       height: 3rem;
@@ -58,7 +102,6 @@
       }
 
       .form_data_container{
-          margin-top: 5rem;
 
           mat-form-field{
               width: 100%;
@@ -87,7 +130,6 @@
 
             .register{
               text-decoration: underline;
-              margin-bottom: 2rem;
               cursor: pointer;
             }
 
