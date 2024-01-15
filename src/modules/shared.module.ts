@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { SafeHtmlPipe } from './shared/custom-form/pipes/safe-html.pipe';
 import { DotfieldPipe } from '../pipes/dotfield.pipe';
+import { AdminService } from 'src/services/admin.service';
 
 @NgModule({
       imports: [
@@ -23,7 +24,7 @@ import { DotfieldPipe } from '../pipes/dotfield.pipe';
             DotfieldPipe,
             // DateAgoPipe
       ],
-      providers: [],
+      providers: [AdminService],
       entryComponents: [
       ]
 })

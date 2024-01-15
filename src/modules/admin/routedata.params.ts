@@ -64,9 +64,9 @@ export const gainsRouteData: RouteData = {
         { name: 'Status', placeholder: 'Status', type: 'text' }
     ],
     primaryKey: `_id`,
-    addFormTitle: `Add Ticket`,
-    editFormTitle: `Edit Ticket`,
-    addButtonTitle: `Add New Ticket`,
+    addFormTitle: `Add Gain`,
+    editFormTitle: `Edit Gain`,
+    addButtonTitle: `Add New Gain`,
 
     viewMainTitleField: 'title',
 

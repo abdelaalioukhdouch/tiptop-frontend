@@ -89,6 +89,7 @@ getUserRole(): string {
   }
 
 
+
   signup(user: Omit<User, "id_user">): Observable<User> {
     return this.http
       .post<User>(`${this.url}/auth/register`, user, this.httpOptions)
@@ -99,6 +100,24 @@ getUserRole(): string {
   }
   clearLocalStorage() {
     localStorage.clear();
+  }
+
+  refreshToken(): Observable<{ token: string }> {
+    const refreshTokenPayload = {
+      refreshToken: this.token, // Send the current token
+    };
+
+    // Make an HTTP request to your server to refresh the token
+    return this.http.post<{ token: string }>(
+      `${this.url}/refresh-token`,
+      refreshTokenPayload
+    );
+  }
+
+  updateToken(newToken: string): void {
+    this.token = newToken;
+    // Store the new token in local storage or your preferred storage mechanism
+    localStorage.setItem("token", newToken);
   }
 
   login(

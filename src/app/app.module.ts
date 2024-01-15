@@ -37,6 +37,7 @@ import { SiteLayoutComponent } from './site-layout/site-layout.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { NewsletterView } from 'src/views/newsletter/newsletter.view';
 import { DetailsView } from 'src/views/details/details-jeu';
+import { AdminService } from 'src/services/admin.service';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -87,6 +88,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule
   ],
   providers: [
+    AdminService,
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     {
