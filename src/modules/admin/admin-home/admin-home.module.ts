@@ -15,6 +15,7 @@ import { SideNavModule } from '../../side-nav/side-nav.module';
 import { AdminTicketsListComponent } from '../admin-tickets-list/admin-tickets-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminGainsComponent } from '../admin-gains/admin-gains.component';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   {
@@ -62,7 +63,8 @@ const routes: Routes = [
     MatButtonModule,
     MatExpansionModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule
   ],
   declarations: [AdminHomeComponent, AdminFontComponent, AdminTicketsListComponent, AdminGainsComponent]
 })

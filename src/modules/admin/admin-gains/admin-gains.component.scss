@@ -1,0 +1,22 @@
+.card {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.custom-image {
+    max-width: 70px; /* Adjust the size as needed */
+    max-height: 70px; /* Adjust the size as needed */
+  }
+
+  .img{
+    align-self: center;
+    margin-right: 1rem;
+  }
+
+  .edit-icon {
+    color: #166ab4; /* Dark blue color (change to your desired color) */
+  }
+  
+  /* Customize the color for the delete icon */
+  .delete-icon {
+    color: #f04713; /* Orange color (change to your desired color) */
+  }

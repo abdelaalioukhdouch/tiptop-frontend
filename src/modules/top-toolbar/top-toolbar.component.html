@@ -3,7 +3,7 @@
     <div class="flex-space-between w-100">
       <div class="flex">
         <button mat-button (click)="goBack()">←</button>
-        Dashboard
+        <span class="white-text" (click)="home()">Dashboard</span>
       </div>
       <div>
         <ng-container *ngIf="loggedInUser">

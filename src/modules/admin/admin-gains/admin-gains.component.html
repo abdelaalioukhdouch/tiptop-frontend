@@ -1,6 +1,26 @@
-<ul>
-  <li *ngFor="let gain of gains">
-    <!-- Display gain properties here -->
-    {{ gain.user }} - {{ gain.ticket }} - {{ gain.claimedAt }}
-  </li>
-</ul>
+<div>
+  <div class="row">
+<h2>Liste des gains (Total : {{ totalGains }})</h2>
+
+    <div class="col-md-4" *ngFor="let gain of gains">
+      <div class="card mb-3" style="flex-direction: row-reverse;">
+
+        <!-- Image Section -->
+        <div class="img">
+                <img src="../assets/img/images/gain.png" alt="Image" class="card-img-top custom-image">
+         <!-- Edit and Delete Icons -->
+        <div style="margin-top: 2rem;" class="card-icons">
+          <mat-icon class="edit-icon">edit</mat-icon>
+          <mat-icon (click)="deleteGain(gain.id)" class="delete-icon">delete</mat-icon>
+        </div>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Ticket: {{ gain.user }}</h5>
+          <p class="card-text">Ticket: {{ gain.ticket }}</p>
+          <p class="card-text">Claimed At: {{ gain.claimedAt | date }}</p>
+          <!-- Add other properties as needed -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

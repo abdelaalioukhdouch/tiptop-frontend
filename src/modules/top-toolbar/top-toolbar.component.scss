@@ -10,7 +10,7 @@ mat-toolbar {
     top: 0;
     left: 0;
     width: 100%;
-    background: white;
+    background: #18191b;
     color: rgb(29, 29, 29);
 
 }
@@ -19,9 +19,16 @@ mat-toolbar button {
     font-size: 15px;
     font-weight: normal;
     margin-right: 5px;
+    color: white;
+    text-decoration-color: white;
 }
 
 
 mat-icon {
     font-size: 20px;
 }
+
+.white-text {
+    color: white;
+    cursor: pointer;
+  }

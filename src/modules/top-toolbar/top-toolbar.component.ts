@@ -52,7 +52,12 @@ export class TopToolbarComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back(); // Utilise la fonction back() de Location pour revenir en arrière
+    //this.location.back(); // Utilise la fonction back() de Location pour revenir en arrière
+    this.router.navigate(['/home']);
+  }
+
+  home(){
+      this.router.navigate(['/admin']);
   }
 
   logout() {

@@ -11,11 +11,15 @@ import { AdminService } from '../services/admin.service';
 import { FormControl } from '@angular/forms';
 
 interface Gain {
+  id: string; // Include the id property
   user: string;
   ticket: string;
   claimedAt: Date;
+  userName: string; // Add userName field
+  ticketTitle: string; // Add ticketTitle field
   // Add other properties as needed
 }
+
 
 @Component({
   selector: 'app-admin-gains',
@@ -25,6 +29,8 @@ interface Gain {
 
 export class AdminGainsComponent implements OnInit {
   gains: Gain[] = [];
+  totalGains: number = 0;
+
 
   constructor(private adminService: AdminService) { }
 
@@ -36,6 +42,9 @@ export class AdminGainsComponent implements OnInit {
     this.adminService.getGains().subscribe(
       (data: Gain[]) => {
         this.gains = data;
+        this.totalGains = this.gains.length; // Calculate the total number of gains
+      console.log(this.gains);
+        console.log(this.gains)
       },
       (error) => {
         console.error('Error:', error);
@@ -43,5 +52,18 @@ export class AdminGainsComponent implements OnInit {
     );
   }
   
+  deleteGain(gainId: string): void {
+    this.adminService.deleteGain(gainId).subscribe(
+      () => {
+        // Successfully deleted, update the gains list
+        this.gains = this.gains.filter((gain) => gain.id !== gainId);
+        this.totalGains = this.gains.length;
+      },
+      (error) => {
+        console.error('Error deleting gain:', error);
+      }
+    );
+  }
+
 
 }

@@ -28,4 +28,9 @@ export class AdminService {
     if(q) url += `?${q}`;
     return this.http.get(url);
   }
+
+  deleteGain(gainId: string): Observable<void> {
+    const url = `${Appsettings.API_ENDPOINT}/gain/${gainId}`;
+    return this.http.delete<void>(url);
+  }
 }
