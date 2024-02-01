@@ -20,6 +20,7 @@ const routes: Routes = [
     path: '',
     component: SiteLayoutComponent,
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'home' }, // Default route added here
       { path: 'home', component: HomeComponent },
       { path: 'privacy-policy', component: PrivacyPolicy },
       { path: 'legals-informations', component: LegalsInformations },
