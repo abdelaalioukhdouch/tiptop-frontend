@@ -12,6 +12,9 @@ export class HomeComponent implements OnInit {
     userIsAuthenticated = false;
     currentUser: any;
     userRole: string;
+    targetDate = new Date("Dec 31, 2024 23:59:59").getTime();
+    displayTime: string;
+    private interval;
 
 
     profileisSet = false
@@ -22,9 +25,40 @@ export class HomeComponent implements OnInit {
         right: false
     };
 
-    constructor(private authService: AuthService, private profileService: ProfileService) { }
+    constructor(private authService: AuthService, private profileService: ProfileService) { 
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 20); // Add 20 days to the current date
+      this.targetDate = currentDate.getTime();
+    }
+
+    ngOnDestroy() {
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
+    }
+  
+    startCountdown() {
+      this.interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = this.targetDate - now;
+  
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  
+        this.displayTime = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  
+        if (distance < 0) {
+          clearInterval(this.interval);
+          this.displayTime = "EXPIRED";
+        }
+      }, 1000);
+    }
 
     ngOnInit() {
+      this.startCountdown();
+
         this.profileisSet = this.profileService.getIsProfileSet()
         this.currentUser = this.authService.getUserData();
         this.userRole = this.currentUser?.user?.role;

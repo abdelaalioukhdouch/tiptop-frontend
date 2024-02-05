@@ -21,6 +21,12 @@ export class TicketService {
                 catchError(this.handleError)
             )
     }
+
+    selectWinner(): Observable<any> {
+        const API_URL = `${this.REST_API}/select-winner`;
+        return this.httpClient.get(API_URL).pipe(catchError(this.handleError));
+    }
+
     // Error 
     handleError(error: HttpErrorResponse) {
         let errorMessage = '';

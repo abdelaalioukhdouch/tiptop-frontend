@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Profile } from 'src/models/profile';
@@ -17,6 +17,7 @@ export class ProfileService {
   private isProfileSet: boolean = false
   private updatedProfile = new Subject<Profile>();
   public err = new BehaviorSubject<any>(null);
+  httpClient: any;
   constructor(
     private http: HttpClient, private router: Router
   ) { }
@@ -90,10 +91,17 @@ export class ProfileService {
 
   }
 
+  updateUser(userId: string, userData: any): Observable<any> {
+    return this.http.put(BACKEND_URL+`/${userId}`, userData);
+  }
+  
+
+
+
   getProfile() {
 
     this.http.get<{ profile: any, message: string }>
-    (BACKEND_URL + "/viewprofile")
+    (BACKEND_URL + "/")
       .subscribe(profile => {
 
         let prof = profile.profile
@@ -109,7 +117,7 @@ export class ProfileService {
 
   getProfileByCreatorId() {
     return this.http.get<{ profile: any, message: string }>
-    (BACKEND_URL+"/viewprofile")
+    (BACKEND_URL+"/")
   }
 
   getPostUserByCreatorId(creatorId) {

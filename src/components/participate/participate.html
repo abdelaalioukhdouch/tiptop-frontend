@@ -15,14 +15,16 @@
 							<small *ngIf="err" class="text-danger">
 								{{err}}
 							</small>
-							<small *ngIf="apiData" class="text-success">
+							<img style="width: 14rem;" *ngIf="isCodeCorrect" src="../assets/img/congrats.png" alt="">
+
+							<small *ngIf="apiData" class="text-success" >
 								{{apiData.message}}
 							</small>
 						</div>
 					</div>
 					<div class="col-md-12" style="text-align: center;">
 						<div class="form-group">
-							<input type="button" value="Envoyer" class="btn" (click)="consume()" [disabled]="waiting">
+							<input *ngIf="!isCodeCorrect" type="button" value="Envoyer" class="btn" (click)="consume()" [disabled]="waiting">
 							<div class="submitting" *ngIf="waiting">
 								<div class="spinner-border" role="status">
 									<span class="sr-only">Loading...</span>
@@ -32,6 +34,12 @@
 					</div>
 				</div>
 			</form>
+
+<div *ngIf="isCodeCorrect" class="d-flex justify-content-center">
+<p>Restez à l'écoute, un grand tirage au sort déterminera bientôt le gagnant d'un an de thé d'une valeur de 360€. Bonne chance !</p>
+<button class="btn btn-success btn-lg" [disabled]="hasParticipated" (click)="participateInBigPrize()">{{ buttonLabel }}</button>
+</div>
+
 		</div>
 	</div>
 </div>

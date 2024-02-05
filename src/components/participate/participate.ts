@@ -8,7 +8,12 @@ import { TicketService } from '../../services/ticket.service';
   styleUrls: ['./participate.scss']
 })
 export class ParticipateComponent implements OnInit, OnDestroy {
+  isCodeCorrect = false;
+  winner: any;
 
+  buttonLabel: string = "Participez au Grand Prix";
+  hasParticipated: boolean = false;
+  
   code: string;
   err: string;
   waiting = false;
@@ -43,10 +48,12 @@ export class ParticipateComponent implements OnInit, OnDestroy {
           next: (res) => {
             console.log(res, "res");
             this.apiData = res;
+            this.isCodeCorrect = true;
           },
           error: (err) => {
             console.log(err, "err");
             this.err = err.error ? err.error.message : 'Error with request'
+            this.isCodeCorrect = false;
           }
         }).add(() => {
           this.waiting = false;
@@ -56,5 +63,18 @@ export class ParticipateComponent implements OnInit, OnDestroy {
 
     }
   }
+
+  participateInBigPrize(): void {
+    this.hasParticipated = true; // Set to true after the action is performed
+    this.buttonLabel = "Participation enregistrée";
+    this.ticketSvc.selectWinner().subscribe({
+      next: (response) => {
+        this.winner = response.winner;
+      },
+      error: (error) => {
+        console.error('There was an error selecting the winner:', error);
+      }
+    });  }
+  
 
 }

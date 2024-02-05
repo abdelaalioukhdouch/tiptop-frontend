@@ -56,9 +56,9 @@
             <span class="nav-link-inner--text" >Mon compte {{userRole}}</span>
           </a>
           <div class="dropdown-menu">
-            <a [routerLink]="['/admin']" *ngIf="userRole === 'admin'" class="dropdown-item">Dashboard</a>
+            <a [routerLink]="['/admin']" *ngIf="userRole !== 'user'" class="dropdown-item">Dashboard</a>
             <a [routerLink]="['/profile']" class="dropdown-item">Profile</a>
-            <a [routerLink]="['/login']" class="dropdown-item">Gains</a>
+            <a *ngIf="userRole === 'user'" [routerLink]="['/gains']" class="dropdown-item">Gains</a>
             <!--<a [routerLink]="['/register']" class="dropdown-item">Register</a>-->
           </div>
         </li>

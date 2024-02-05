@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { cloneDeep } from 'lodash';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Appsettings } from 'src/app/app.settings';
 import { DashboardService } from '../../../services/dashboard.service';
@@ -9,6 +9,8 @@ import { CustomFormComponent } from '../../shared/custom-form/custom-form.compon
 import { CustomFormModel } from '../../shared/custom-form/custom-form.model';
 import { AdminService } from '../services/admin.service';
 import { FormControl } from '@angular/forms';
+import { ProfileService } from 'src/services/profile.service';
+import { AuthService } from 'src/services/auth.service';
 
 @Component({
   selector: 'app-admin-tickets-list',
@@ -16,6 +18,15 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./admin-tickets-list.component.scss', '../admin-font/admin-font.component.scss']
 })
 export class AdminTicketsListComponent implements OnInit {
+
+  userIsAuthenticated = false;
+  userRole: string;
+  private authListenerSubs: Subscription;
+  profile: any;
+  username: string
+  profileisSet = false
+  userIsAdmin = false;
+  currentUser : any;
 
   apiData: any;
 
@@ -32,7 +43,9 @@ filteredTickets: any[] = [];
   constructor(
     public adminSvc: AdminService,
     private dialog: MatDialog,
-    private dashboardSvc: DashboardService
+    private dashboardSvc: DashboardService,
+    private authService: AuthService, private profileService: ProfileService
+
   ) {
     this.getRecords();
 
@@ -44,6 +57,24 @@ filteredTickets: any[] = [];
   }
 
   ngOnInit() {
+    this.currentUser = this.authService.getUserData();
+    //this.userRole = this.authService.getUserRole();
+
+    this.profileisSet = this.profileService.getIsProfileSet()
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    if (this.userIsAuthenticated) {
+      this.getProfile()
+    }
+
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+        if (this.userIsAuthenticated) {
+          this.getProfile()
+        }
+      });
+   this.userRole = this.currentUser?.user?.role;
   }
 
   ngOnDestroy(): void {
@@ -140,6 +171,29 @@ filteredTickets: any[] = [];
       }
       try { delete this.apiData.data[index].editing; } catch (err) { }
     })
+  }
+
+  getProfile() {
+    this.profileService.getProfileByCreatorId().subscribe(prof => {
+      this.profileisSet = true
+      this.username = prof.profile.username
+      this.userRole = prof.profile.role
+      this.profile = {
+        id: prof.profile._id,
+        username: prof.profile.username,
+        bio: prof.profile.bio,
+        imagePath: prof.profile.imagePath,
+        creator: prof.profile.creator,
+        role: prof.profile.role
+      };
+      this.userIsAdmin = this.profile.role === 'admin';
+
+    },
+      err => {
+        this.profileisSet = false
+        this.username = null
+      })
+
   }
 
 }

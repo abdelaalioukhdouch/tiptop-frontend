@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { cloneDeep } from 'lodash';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../../services/auth.service';
 import { RouteData } from '../routedata.interface';
@@ -10,6 +10,7 @@ import { DashboardService } from '../../../services/dashboard.service';
 import { CustomFormComponent } from '../../shared/custom-form/custom-form.component';
 import { CustomFormModel } from '../../shared/custom-form/custom-form.model';
 import { FormControl } from '@angular/forms';
+import { ProfileService } from 'src/services/profile.service';
 
 @Component({
   selector: 'app-admin-font',
@@ -17,6 +18,16 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./admin-font.component.scss']
 })
 export class AdminFontComponent implements OnInit, OnDestroy {
+
+
+  userIsAuthenticated = false;
+    userRole: string;
+    private authListenerSubs: Subscription;
+    profile: any;
+    username: string
+    profileisSet = false
+    userIsAdmin = false;
+    currentUser : any;
 
   apiData: any;
   originalData: any;
@@ -41,7 +52,8 @@ export class AdminFontComponent implements OnInit, OnDestroy {
     public authSvc: AuthService,
     private dialog: MatDialog,
     private dashboardSvc: DashboardService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService, private profileService: ProfileService
   ) {
     this.config = <RouteData>(this.route.snapshot.data);
     if (this.config) {
@@ -53,6 +65,47 @@ export class AdminFontComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.originalData = this.apiData;
+    this.currentUser = this.authService.getUserData();
+      //this.userRole = this.authService.getUserRole();
+
+      this.profileisSet = this.profileService.getIsProfileSet()
+      this.userIsAuthenticated = this.authService.getIsAuth();
+      if (this.userIsAuthenticated) {
+        this.getProfile()
+      }
+  
+      this.authListenerSubs = this.authService
+        .getAuthStatusListener()
+        .subscribe(isAuthenticated => {
+          this.userIsAuthenticated = isAuthenticated;
+          if (this.userIsAuthenticated) {
+            this.getProfile()
+          }
+        });
+     this.userRole = this.currentUser?.user?.role;
+  }
+
+  getProfile() {
+    this.profileService.getProfileByCreatorId().subscribe(prof => {
+      this.profileisSet = true
+      this.username = prof.profile.username
+      this.userRole = prof.profile.role
+      this.profile = {
+        id: prof.profile._id,
+        username: prof.profile.username,
+        bio: prof.profile.bio,
+        imagePath: prof.profile.imagePath,
+        creator: prof.profile.creator,
+        role: prof.profile.role
+      };
+      this.userIsAdmin = this.profile.role === 'admin';
+
+    },
+      err => {
+        this.profileisSet = false
+        this.username = null
+      })
+
   }
 
   ngOnDestroy(): void {

@@ -322,18 +322,20 @@ getUserRole(): string {
 
   logout() {
     localStorage.clear();
-
     this.token = null;
     this.user = null;
-
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.clearLocalStorage();
 
-    this.router.navigate(["/login"]);
-  }
+    // Redirection vers la page de connexion
+    this.router.navigate(["/home"]).then(() => {
+        window.location.reload(); // Rafraîchit la page après la redirection
+    });
+}
+
   private clearAuthData() {
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");

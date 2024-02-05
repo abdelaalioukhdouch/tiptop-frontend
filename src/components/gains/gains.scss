@@ -1,6 +1,5 @@
 @import "../../shared/styles/variables.scss";
 .container{
-    display: flex;
     .contact-info{
        
         background-color: $green;
@@ -11,7 +10,7 @@
         margin-bottom: auto;
         margin-left: -18rem;
         padding: 2rem;
-        border-radius: 2rem;
+       
         .info-wrap{
             color: $white;
             h3{
@@ -36,14 +35,13 @@
         }
         
     }
-    width: 60%;
+    width: 50%;
     background-color: $white;
     margin-top: 10rem;
     margin-left: auto;
     margin-right: auto;
     padding: 6rem;
     border-radius: 2rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     justify-content: center;
 
    
@@ -53,7 +51,6 @@
     }
 
     .form-group{
-        text-align: center;
         .form-control{
             border: aliceblue;
             width: 40rem;
