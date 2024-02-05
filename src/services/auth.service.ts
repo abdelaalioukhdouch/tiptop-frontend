@@ -331,7 +331,7 @@ getUserRole(): string {
     this.clearLocalStorage();
 
     // Redirection vers la page de connexion
-    this.router.navigate(["/home"]).then(() => {
+    this.router.navigate(["/"]).then(() => {
         window.location.reload(); // Rafraîchit la page après la redirection
     });
 }
