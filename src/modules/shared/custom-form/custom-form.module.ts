@@ -39,7 +39,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatAutocompleteModule,
     ScrollingModule,
     MatChipsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   exports: [CustomFormComponent],
   entryComponents: [CustomFormComponent],

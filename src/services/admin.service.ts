@@ -42,6 +42,12 @@ export class AdminService {
         catchError(this.handleError)
       )
   }
+
+  updateGain(gainId: string, newData: any): Observable<any> {
+    const url = `${this.REST_API}/gain/${gainId}`;
+    return this.httpClient.put(url, newData);
+  }
+
   // Delete
   deleteUser(id:any): Observable<any> {
     let API_URL = `${this.REST_API}/delete-user/${id}`;
@@ -62,4 +68,5 @@ export class AdminService {
     console.log(errorMessage);
     return throwError(errorMessage);
   }
+  
 }

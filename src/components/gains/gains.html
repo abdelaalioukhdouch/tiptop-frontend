@@ -1,22 +1,27 @@
 <div class="container my-4">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <h2>Mes gains</h2>
-            <div class="row">
-                <!-- Utilisez col-md-6 pour obtenir 2 éléments par ligne sur les écrans medium et plus grands -->
-                <div class="col-12 col-md-6 col-lg-12" *ngFor="let gain of gains">
-                    <!-- Ajoutez ici la condition pour vérifier si userId est égal à 1 -->
-                    <div class="card mb-4" *ngIf="gain.userId === rdm" style="flex-direction: row; max-width: 540px;">
-                        <!-- Image Section -->
-                        <img src="../assets/img/images/gain.png" alt="Image" class="card-img-left custom-image" style="width: 40%; object-fit: cover;">
-                        <!-- Card Content -->
-                        <div class="card-body">
-                            <p class="card-text">Ticket: {{ gain.ticketTitle }}</p>
-                            <p class="card-text">Claimed At: {{ gain.claimedAt }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <mat-grid-list style="margin-top: 8rem;width: 84%;" cols="2" rowHeight="2:1" gutterSize="16">
+    <ng-container *ngFor="let gain of gains">
+    <ng-container *ngIf="isEqual(gain.email, userEmail)">
+      <mat-grid-tile [ngClass]="{'card-border-orange': !gain.toValidate, 'card-border-green': gain.toValidate}" class="grid">
+        <div>
+          <div class="card-body">
+          <div *ngIf="gain.toValidate" class="img">
+                <img src="../assets/img/images/gain.png" alt="Image" class="card-img-top custom-image">
+              </div>
+              <!-- Sinon, affichez l'image normale -->
+              <div *ngIf="!gain.toValidate" class="img">
+                <img src="../assets/img/images/gain.png" alt="Image" class="card-img-top custom-image" style="filter: grayscale(100%);">
+              </div>
+            <h5 class="card-title ticket-title">{{ gain.ticketTitle }}</h5>
+            <p class="claimedAt">{{ gain.claimedAt | date:'fullDate' }} à {{ gain.claimedAt | date:'shortTime' }}</p>
+            <p class="card-text">Détails...</p>
+            <p [ngClass]="{'text-orange': !gain.toValidate, 'text-green': gain.toValidate}">
+              {{ gain.toValidate ? 'Validé' : 'En attente de la validation' }}
+            </p>
+          </div>
         </div>
-    </div>
+      </mat-grid-tile>
+      </ng-container>
+    </ng-container>
+  </mat-grid-list>
 </div>

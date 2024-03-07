@@ -11,6 +11,20 @@ import { CustomFormComponent } from '../../shared/custom-form/custom-form.compon
 import { CustomFormModel } from '../../shared/custom-form/custom-form.model';
 import { FormControl } from '@angular/forms';
 import { ProfileService } from 'src/services/profile.service';
+import { AdminService } from '../services/admin.service';
+
+interface Gain {
+  id: string; // Include the id property
+  user: string;
+  ticket: string;
+  claimedAt: Date;
+  toValidate: boolean;
+  email:string;
+  role:string;
+  userName: string; // Add userName field
+  ticketTitle: string; // Add ticketTitle field
+  // Add other properties as needed
+}
 
 @Component({
   selector: 'app-admin-font',
@@ -18,6 +32,7 @@ import { ProfileService } from 'src/services/profile.service';
   styleUrls: ['./admin-font.component.scss']
 })
 export class AdminFontComponent implements OnInit, OnDestroy {
+  gains: Gain[] = [];
 
 
   userIsAuthenticated = false;
@@ -25,6 +40,8 @@ export class AdminFontComponent implements OnInit, OnDestroy {
     private authListenerSubs: Subscription;
     profile: any;
     username: string
+    userEmail: string;
+
     profileisSet = false
     userIsAdmin = false;
     currentUser : any;
@@ -38,6 +55,10 @@ export class AdminFontComponent implements OnInit, OnDestroy {
   searchCtrl = new FormControl();
   
   _config: RouteData;
+  viewMainSubtitleField: string = 'exemple@domaine.com';
+
+  gainsCount = 0;
+
   @Input() set config(config: RouteData) {
     this._config = config;
   }
@@ -49,23 +70,30 @@ export class AdminFontComponent implements OnInit, OnDestroy {
 
   $destroy = new Subject();
   constructor(
+
+    private adminService: AdminService,
     public authSvc: AuthService,
     private dialog: MatDialog,
     private dashboardSvc: DashboardService,
     private route: ActivatedRoute,
     private authService: AuthService, private profileService: ProfileService
   ) {
+    this.gains = this.gains.map(gain => ({ ...gain, toValidate: true }));
+
     this.config = <RouteData>(this.route.snapshot.data);
     if (this.config) {
       this.getRecords();
     } else {
       this.dashboardSvc.showInfoDialog(`config not found`, `please contact developer`, `error`);
     }
+
   }
 
   ngOnInit() {
     this.originalData = this.apiData;
     this.currentUser = this.authService.getUserData();
+    this.loadGains();
+
       //this.userRole = this.authService.getUserRole();
 
       this.profileisSet = this.profileService.getIsProfileSet()
@@ -83,13 +111,18 @@ export class AdminFontComponent implements OnInit, OnDestroy {
           }
         });
      this.userRole = this.currentUser?.user?.role;
+     this.userEmail = this.currentUser?.user?.email;
+
   }
+
 
   getProfile() {
     this.profileService.getProfileByCreatorId().subscribe(prof => {
       this.profileisSet = true
       this.username = prof.profile.username
       this.userRole = prof.profile.role
+      this.userEmail = prof.profile.email
+
       this.profile = {
         id: prof.profile._id,
         username: prof.profile.username,
@@ -110,6 +143,19 @@ export class AdminFontComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.$destroy.next(true);
+  }
+
+  loadGains(): void {
+    this.adminService.getGains().subscribe(
+      (data: Gain[]) => {
+        this.gains = data;
+      console.log(this.gains);
+        console.log(this.gains)
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
   }
 
   getRecords(): void {
@@ -152,6 +198,40 @@ export class AdminFontComponent implements OnInit, OnDestroy {
       );
     }
   }
+
+  isEqual(email1: string, email2: string): boolean {
+    return email1 === email2;
+  }
+
+  getGains(): void {
+    this.adminService.getGains().subscribe(
+      (data: Gain[]) => {
+        this.gains = data;
+      },
+      (error) => {
+        console.error('Error fetching gains:', error);
+        // Handle error
+      }
+    );
+  }
+
+  validateGain(gain: any) {
+    // Mettre à jour le champ toValidate
+    gain.toValidate = !gain.toValidate;
+
+    // Appeler la méthode updateGain du service pour mettre à jour le gain côté serveur
+    this.adminService.updateGain(gain._id, { toValidate: gain.toValidate }).subscribe(
+      (updatedGain: any) => {
+        console.log('Gain updated successfully:', updatedGain);
+      },
+      (error) => {
+        console.error('Error updating gain:', error);
+        // Revert the change if update fails
+        gain.toValidate = !gain.toValidate;
+      }
+    );
+  }
+  
 
   addFont(record?: any, index?: number): void {
 

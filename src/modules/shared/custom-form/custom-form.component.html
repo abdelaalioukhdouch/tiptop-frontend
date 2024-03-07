@@ -116,6 +116,19 @@
             </span>
           </mat-form-field>
 
+
+
+          <mat-form-field *ngSwitchCase="'role'">
+            <input type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              [disabled]="m.disabled || (updateMode && m.disabledWhenUpdate)" [required]="m.required" matInput
+              [(ngModel)]="valueModel[m.name]" [name]="m.name" [placeholder]="(m.placeholder || m.name) "
+              [matTooltip]="m.tooltip" />
+
+            <span class="error" *ngIf="err?.error && err?.error[m.name] && err?.error[m.name].length">
+              {{err?.error[m.name][0]}}
+            </span>
+          </mat-form-field>
+
           <mat-form-field *ngSwitchCase="'number'">
             <input #inputText="ngModel" type="number" [disabled]="m.disabled || (updateMode && m.disabledWhenUpdate)"
               (input)="checkValidations(m, inputText)" [required]="m.required" matInput [(ngModel)]="valueModel[m.name]"

@@ -35,12 +35,12 @@
         }
         
     }
-    width: 50%;
+    width: 90%;
     background-color: $white;
     margin-top: 10rem;
     margin-left: auto;
     margin-right: auto;
-    padding: 6rem;
+    //padding: 6rem;
     border-radius: 2rem;
     justify-content: center;
 
@@ -75,4 +75,43 @@
 
 .submitting {
     margin-top: 5px;
+}
+
+.text-orange {
+    color: rgb(234, 168, 46);
+  }
+  
+  .text-green {
+    color: rgb(21, 193, 21);
+  }
+
+
+.grid{
+    display: inline;
+    text-align: center;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: solid 3px;
+    border-radius: 6px;
+}
+
+.card-border-orange {
+    border-color: rgba(239, 180, 72, 0.482);
+  }
+  
+  .card-border-green {
+    border-color: rgba(60, 212, 60, 0.425);
+  }
+
+  .ticket-title {
+    font-size: 20px; /* Ajustez la taille selon vos préférences */
+  }
+  
+  .claimed-at {
+    font-size: 14px; /* Ajustez la taille selon vos préférences */
+  }
+  
+.img{
+    position: absolute;
+    opacity: 0.3;
+    width: 10rem;
 }

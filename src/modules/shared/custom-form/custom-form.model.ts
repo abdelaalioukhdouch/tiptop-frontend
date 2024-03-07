@@ -20,9 +20,12 @@ export class CustomFormModel {
         | 'file'
         | 'autochips'
         | 'hidden'
+        | 'default'
         ;
     value?: any;
+    options?:any;
     placeholder?: string;
+    default?: string;
     hint?: string;
     url?: string;//url if data needs to be fetched
     queryField?: string;//query of data

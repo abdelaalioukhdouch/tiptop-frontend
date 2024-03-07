@@ -9,6 +9,7 @@ import { CustomFormComponent } from '../../shared/custom-form/custom-form.compon
 import { CustomFormModel } from '../../shared/custom-form/custom-form.model';
 import { AdminService } from '../services/admin.service';
 import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/services/auth.service';
 
 interface Gain {
   id: string; // Include the id property
@@ -30,12 +31,20 @@ interface Gain {
 export class AdminGainsComponent implements OnInit {
   gains: Gain[] = [];
   totalGains: number = 0;
+  userRole: string;
+  currentUser : any;
 
 
-  constructor(private adminService: AdminService) { }
+
+  constructor(private adminService: AdminService, public authService: AuthService) { }
 
   ngOnInit() {
     this.loadGains();
+
+    this.currentUser = this.authService.getUserData();
+
+    this.userRole = this.currentUser?.user?.role;
+
   }
 
   loadGains(): void {

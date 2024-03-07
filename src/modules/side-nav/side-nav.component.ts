@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-side-nav',
@@ -12,10 +12,12 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class SideNavComponent implements OnInit, OnDestroy {
 
   @ViewChild('searchFormControl', { static: false }) searchFormControl: ElementRef;
-  _config: SideNavConfig;
+  private _config: SideNavConfig;
   @Input() set config(config: SideNavConfig) {
     this._config = config;
-    if (config) {
+    if (config && config.sideNavButtons && config.sideNavButtons.length > 0) {
+      // Ensure the config is initialized properly before attempting to use it
+      this.sideNavButtonClicked(null, this.config.sideNavButtons[1]);
     }
   }
 
@@ -27,7 +29,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
   showSubNav = false;
   sideNavTitle = 'Search Template';
   selectedNavItem: string;
-  $destroy = new Subject();
+  $destroy = new Subject<void>();
 
   searchControl = new FormControl();
 
@@ -35,48 +37,43 @@ export class SideNavComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
   ) {
+    this.searchControl.valueChanges.pipe(
+      distinctUntilChanged(), 
+      debounceTime(600),
+      takeUntil(this.$destroy)
+    ).subscribe((res: string) => {
+      this.search(res);
+    });
 
-    this.searchControl.valueChanges.pipe(distinctUntilChanged(), debounceTime(600))
-      .subscribe((res: string) => {
-        this.search(res);
-      })
-
-
-    try {
-      this.router.events.subscribe(res => {
-        if(res instanceof NavigationEnd) {
-          this.route.children[0].data.subscribe(res => {
-            this.selectedNavItem = res['selectedNavItem'];
-          })
-        }
-      })
-
-    } catch (err) { }
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      takeUntil(this.$destroy)
+    ).subscribe(() => {
+      this.route.firstChild?.data.subscribe(data => {
+        this.selectedNavItem = data['selectedNavItem'];
+      }).unsubscribe(); // Here we unsubscribe immediately because data will emit once per navigation event
+    });
   }
 
   ngOnInit() {
-    this.sideNavButtonClicked(null, this.config.sideNavButtons[1]);
+    // Moved inside the setter of config to ensure it's only called when config is properly initialized
   }
 
   ngOnDestroy(): void {
-    this.$destroy.next(true);
+    this.$destroy.next();
+    this.$destroy.complete();
   }
 
   search(keyword: string): void {
+    // Implement your search logic here
   }
 
-  subscriber: any;
   sideNavButtonClicked(event: Event | null, sideNavButton: SideNavButton, bypassToggleLogic?: boolean) {
-    if (sideNavButton?.type == 'routerLink') {
+    if (sideNavButton?.type === 'routerLink') {
       this.router.navigate([sideNavButton.link]);
-      // return;
     }
+    // Implement logic for 'subNav' type and handling of 'bypassToggleLogic' if required
   }
-
-
-
-
-
 }
 
 export class SideNavButton {

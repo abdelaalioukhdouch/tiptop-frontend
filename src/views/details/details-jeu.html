@@ -52,10 +52,15 @@
 
       <h4>Participation au jeu</h4>
      <div class="row">
-      <p class="text-justify">
-       Pour participer au jeu, veuillez cliquer sur le lien  <a style="text-decoration: none;" href="login">Participer au jeu </a> et une fois connecté, vous pouvez saisir votre code à 10 chiffres pour decouvrir votre gain     
-      </p>
-     </div> <br/> <br/> <br/> <br/>
+  <div class="col-12 text-center my-4"> <!-- Classe text-center pour centrer votre bouton et my-4 pour ajouter de l'espace autour -->
+    <p class="text-justify">
+      Pour participer au jeu, veuillez cliquer sur le bouton ci-dessous et une fois connecté, vous pouvez saisir votre code à 10 chiffres pour découvrir votre gain.
+    </p>
+    <!-- Bouton Bootstrap avec les classes btn et btn-primary pour le style -->
+    <a (click)="logIn()" class="btn btn-primary" role="button">Participer au jeu</a>
+  </div>
+</div>
+ <br/> <br/> <br/> <br/>
 
 
 

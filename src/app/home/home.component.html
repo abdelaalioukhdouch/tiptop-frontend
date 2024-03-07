@@ -20,16 +20,17 @@
           <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 text-center">
               <img src="./assets/img/teahome.png" style="width: 200px;" class="img-fluid">
-              <h1></h1>
-              <h1 class="lead text-white">Venez fêter l'ouverture de notre 10ème boutique !</h1>
+              <h1>Venez participer au jeu concours de Thétiptop</h1>
               <p class="lead text-white">
-Venez fêter l'ouverture de notre 10ème boutique avec Thétiptop en participant à notre jeu-concours
+ en participant à notre jeu-concours
 100% gagnants !</p>
 
-<div>C'est le moment de participer, il ne reste que {{ displayTime }} !</div>
 
-              <div *ngIf="userIsAuthenticated" class="btn-wrapper mt-5">
-                <a routerLink="/participate" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
+<div class="h4">C'est le moment de participer, il ne reste que </div>
+<strong class="display-4">{{ displayTime }}</strong>
+
+              <div *ngIf="!userIsAuthenticated" class="btn-wrapper mt-5">
+                <a (click)="logIn()" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
                   <span class="btn-inner--icon"><i class="ni ni-trophy"></i></span>
                   <span class="btn-inner--text">Je participe</span>
                 </a>
@@ -51,7 +52,7 @@ Venez fêter l'ouverture de notre 10ème boutique avec Thétiptop en participant
   </div>
  
 <section class="info">
-  <h1>Les Gains &mdash; <a target="_blank"></a></h1>
+  <h1>Explorez la gamme variée des lots à gagner !</h1>
 </section>
 <section class="cards-wrapper">
   <div class="card-grid-space">

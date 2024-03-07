@@ -6,9 +6,10 @@ import * as _ from 'lodash';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 // import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../services/auth.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { Appsettings } from '../../../app/app.settings';
+import { usersRouteData } from 'src/modules/admin/routedata.params';
 
 
 @Component({
@@ -17,7 +18,9 @@ import { Appsettings } from '../../../app/app.settings';
   styleUrls: ['./custom-form.component.scss']
 })
 export class CustomFormComponent implements OnInit {
-
+  form: FormGroup;
+  formModel = usersRouteData.formModel;
+  
   public infinity = Infinity;
   public BASE_URL = Appsettings.API_ENDPOINT;
   @Input() dialogRole: 'form' | 'confirm' | 'info' = "form"; //form|confirm
@@ -206,8 +209,22 @@ export class CustomFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    const formGroup = {};
+    
+    this.formModel.forEach(field => {
+      if(field.type === 'select') {
+        formGroup[field.name] = new FormControl(field.value || null);
+      } else {
+        formGroup[field.name] = new FormControl('');
+      }
+    });
 
+    this.form = new FormGroup(formGroup);
+  
   }
+
+  
+  
   err: any;
   waiting = false;
   successModel: any;

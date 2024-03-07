@@ -16,6 +16,35 @@
     <mat-accordion multi>
       <mat-expansion-panel *ngFor="let item of filteredUsers;let itemIndex = index;"
         [class.hightlight-anim]="item.animated" [class.editing]="item.editing">
+
+ <div class="container my-4">
+  <div class="row">
+    <!-- Utilisez 'ng-container' pour le 'ngFor' sans ajouter de balises supplémentaires -->
+    <ng-container *ngFor="let gain of gains">
+      <!-- 'ngIf' pour afficher la carte uniquement si les emails correspondent -->
+      <div class="col-12 col-md-6 mb-3" *ngIf="isEqual(gain.email, item[config.viewMainSubtitleField])">
+        <!-- La classe 'card' de Bootstrap stylise l'élément comme une carte -->
+        <div class="card h-100 shadow-sm">
+          <!-- 'card-body' contient le contenu de la carte -->
+          <div class="card-body">
+            <h5 class="card-title">{{ gain.ticketTitle }}</h5>
+            <p>{{ gain.claimedAt  | date:'fullDate' }} à {{ gain.claimedAt  | date:'shortTime' }}</p>
+
+
+            <p class="card-text">Détails...</p>
+            <!-- Bouton pour valider le gain -->
+          <button class="btn btn-primary" 
+                  (click)="validateGain(gain)" 
+                  [disabled]="gain.toValidate == false">
+            {{ gain.toValidate ? 'Valider ce gain' : 'Validé' }}
+          </button>          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
         <mat-expansion-panel-header>
           <mat-panel-title>
             <strong [style.font-family]="item.font_family">{{item[config.viewMainTitleField]}}</strong>

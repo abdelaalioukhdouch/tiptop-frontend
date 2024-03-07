@@ -29,6 +29,17 @@ export class AdminService {
     return this.http.get(url);
   }
 
+  // updateGain(gainId: string): Observable<any> {
+  //   const url = `${Appsettings.API_ENDPOINT}/gain/${gainId}`;
+  //   return this.http.put(url, null);
+  // }
+
+  updateGain(gainId: string, data: any): Observable<any> {
+    const url = `${Appsettings.API_ENDPOINT}/gain/${gainId}`;
+    return this.http.put(url, data);
+  }
+  
+
   deleteGain(gainId: string): Observable<void> {
     const url = `${Appsettings.API_ENDPOINT}/gain/${gainId}`;
     return this.http.delete<void>(url);

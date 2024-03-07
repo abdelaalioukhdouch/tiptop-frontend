@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RegisterDialog } from '../registrer/register.dialog';
 import { AuthService } from 'src/services/auth.service';
 import { delay, of } from 'rxjs';
+import { ProfileService } from 'src/services/profile.service';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +20,17 @@ export class LoginDialog implements OnInit {
   loginForm: FormGroup;
   loginSuccessMessage: string;
 
-  userRole: any | null = null;;
+  userRole: any | null = null;userIsAuthenticated: boolean;
+  profile: { id: any; username: any; bio: any; imagePath: any; creator: any; role: any; };
+;
 
 
 
   constructor(private authService: AuthService, private dialog: MatDialog,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef) {
+    private _activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef,
+    private profileService: ProfileService,
+    ) {
     /* this.loginForm = new FormGroup({
       email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required)
@@ -55,16 +60,34 @@ export class LoginDialog implements OnInit {
       autoFocus: false
     });
 
-    dialogCard.afterClosed().subscribe(async rslt => {
-      if (!(rslt === undefined)) {
-        //const dialogCard = this.dialog.open(WelcomeDialog, {
-        //  width: '70rem',
-        //height: '30rem',
-        // panelClass: 'mat-dialog-information',
-        //autoFocus: false
-        // });
+    dialogCard.afterClosed().subscribe(result => {
+      if (result === 'LOGGED_IN') { // Assurez-vous que le dialogue renvoie ce résultat après une connexion réussie
+        this.userIsAuthenticated = this.authService.getIsAuth();
+        this.getProfile();
       }
     });
+  }
+
+  getProfile() {
+    this.profileService.getProfileByCreatorId().subscribe(prof => {
+      //this.profileisSet = true
+      //this.username = prof.profile.username
+      this.userRole = prof.profile.role
+      this.profile = {
+        id: prof.profile._id,
+        username: prof.profile.username,
+        bio: prof.profile.bio,
+        imagePath: prof.profile.imagePath,
+        creator: prof.profile.creator,
+        role: prof.profile.role
+      };
+      //this.userIsAdmin = this.profile.role === 'admin';
+
+    },
+      err => {
+        
+      })
+
   }
 
   isValid(controlName) {

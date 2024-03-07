@@ -40,6 +40,7 @@ import { DetailsView } from 'src/views/details/details-jeu';
 import { AdminService } from 'src/services/admin.service';
 import { ProfileComponent } from 'src/components/profile/profile';
 import { GainsComponent } from 'src/components/gains/gains';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -72,7 +73,7 @@ const appRoutes: Routes = [
       SiteLayoutComponent
    ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     SharedModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -89,7 +90,10 @@ const appRoutes: Routes = [
     SectionsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot([]),
+    MatGridListModule,
+    RouterModule.forRoot([], {
+    //initialNavigation: 'enabledBlocking'
+}),
   ],
   providers: [
     AdminService,

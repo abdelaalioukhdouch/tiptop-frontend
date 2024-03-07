@@ -10,13 +10,25 @@ export const usersRouteData: RouteData = {
     formModel: [
         { name: 'name', placeholder: 'Name', type: 'text', required: true },
         { name: 'firstName', placeholder: 'First Name', type: 'text', required: true },
+        {
+            name: 'role', 
+            placeholder: 'Profil', 
+            type: 'text', 
+            value: 'employee',
+            disabled:true,
+            options: [
+              { value: 'employee', viewValue: 'Employé' },
+              { value: 'admin', viewValue: 'Admin' },
+              { value: 'user', viewValue: 'User' }
+            ]
+          },
         { name: 'email', placeholder: 'Email', type: 'email', required: true },
         { name: 'password', placeholder: 'Password', type: 'password' },
     ],
     primaryKey: `_id`,
-    addFormTitle: `Add User`,
+    addFormTitle: `Ajouter un Employé`,
     editFormTitle: `Edit User`,
-    addButtonTitle: `Add New User`,
+    addButtonTitle: `Ajouter un Nouvel Employé`,
 
     viewMainTitleField: 'name',
     viewMainSubtitleField: 'email',

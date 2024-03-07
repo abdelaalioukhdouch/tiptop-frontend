@@ -26,9 +26,16 @@
         <li class="nav-item dropdown">
           <a class="nav-link no-caret" data-toggle="dropdown" role="button">
             <i class="ni ni-ui-04 d-lg-none"></i>
-            <span [routerLink]="['/home']" class="nav-link-inner--text">Le jeu-concours</span>
+            <span [routerLink]="['/details-jeu']" class="nav-link-inner--text">Le jeu-concours</span>
           </a>
-          <div  class="dropdown-menu-xl dropdown-menu" >
+          </li>
+          <li class="nav-item">
+           <a *ngIf="userIsAuthenticated" class="nav-link no-caret" data-toggle="dropdown" role="button">
+            <i class="ni ni-ui-04 d-lg-none"></i>
+            <span routerLink="/participate" class="nav-link-inner--text">Je participe</span>
+          </a>
+
+          <!-- <div  class="dropdown-menu-xl dropdown-menu" > 
             <div class="dropdown-menu-inner">
               <a routerLinkActive="active" [routerLink]="['/details-jeu']" class="media d-flex align-items-center">
                 <div class="icon icon-shape bg-gradient-primary rounded-circle text-white d-none d-md-block">
@@ -48,6 +55,7 @@
               </a>
             </div>
           </div>
+          -->
         </li>
 
 <li class="nav-item dropdown" *ngIf="userIsAuthenticated">

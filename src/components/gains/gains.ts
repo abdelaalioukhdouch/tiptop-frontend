@@ -8,10 +8,12 @@ interface Gain {
   id: string; // Include the id property
   userId: number;
   ticket: string;
+  user: string;
   claimedAt: Date;
   userName: string; // Add userName field
   ticketTitle: string; // Add ticketTitle field
-  // Add other properties as needed
+  email: string;
+  toValidate: boolean;
 }
 
 
@@ -33,6 +35,8 @@ export class GainsComponent implements OnInit {
   profileisSet = false
   userIsAdmin = false;
   rdm: number = 0;
+  userEmail: string;
+
 
 
 
@@ -50,6 +54,8 @@ export class GainsComponent implements OnInit {
       if (this.userIsAuthenticated) {
         this.getProfile()
       }
+      this.userEmail = this.currentUser?.user?.email;
+
   }
 
   genererNombreAleatoire() {
@@ -82,12 +88,16 @@ export class GainsComponent implements OnInit {
       }
     );
   }
-
+  isEqual(email1: string, email2: string): boolean {
+    return email1 === email2;
+  }
   getProfile() {
     this.profileService.getProfileByCreatorId().subscribe(prof => {
       this.profileisSet = true
       this.username = prof.profile.username
       this.userRole = prof.profile.role
+      this.userEmail = prof.profile.email
+
       this.profile = {
         id: prof.profile._id,
         username: prof.profile.username,
