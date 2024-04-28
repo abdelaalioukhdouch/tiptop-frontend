@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CookieService } from 'ngx-cookie-service';
 import { LoginDialog } from 'src/dialogs/login/login.dialog';
+import { User } from 'src/models/User';
 import { AuthService } from 'src/services/auth.service';
 import { ProfileService } from 'src/services/profile.service';
+import { UserDataService } from './userData.service';
 
 @Component({
     selector: 'app-home',
@@ -11,6 +14,8 @@ import { ProfileService } from 'src/services/profile.service';
 })
 
 export class HomeComponent implements OnInit {
+  user: User;
+
     userIsAuthenticated = false;
     currentUser: any;
     userRole: string;
@@ -28,10 +33,36 @@ export class HomeComponent implements OnInit {
         right: false
     };
 
-    constructor(public dialog: MatDialog, private authService: AuthService, private profileService: ProfileService) { 
+    title = 'cookie-demo';
+
+    constructor(
+      private userDataService: UserDataService,
+      private cookieService: CookieService,public dialog: MatDialog, private authService: AuthService, private profileService: ProfileService) { 
       const currentDate = new Date();
       currentDate.setDate(currentDate.getDate() + 20); // Add 20 days to the current date
       this.targetDate = currentDate.getTime();
+    }
+
+    getUserData() {
+      this.user = this.userDataService.retrieveUserDataFromCookie();
+    }
+  
+    clearUserData() {
+      this.userDataService.clearUserDataCookie();
+    }
+    setCookie() {
+      this.cookieService.set('TestCookie', 'Hello World', 4, '/');
+      console.log('Cookie set');
+    }
+  
+    getCookie() {
+      const cookieValue = this.cookieService.get('TestCookie');
+      console.log('Cookie value:', cookieValue);
+    }
+  
+    deleteCookie() {
+      this.cookieService.delete('TestCookie');
+      console.log('Cookie deleted');
     }
 
     ngOnDestroy() {
@@ -60,6 +91,11 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
+      this.user = this.authService.getUserData();
+    if (this.user) {
+      this.userDataService.storeUserDataInCookie(this.user);
+    }
+      this.user = this.authService.getUserData();
       this.startCountdown();
 
         this.profileisSet = this.profileService.getIsProfileSet()
@@ -73,7 +109,34 @@ export class HomeComponent implements OnInit {
       if (this.userIsAuthenticated) {
          this.getProfile()
       }
+    this.currentUser = this.authService.getUserData(); // Assuming this returns user data
+    if (this.currentUser) {
+      this.userRole = this.currentUser.role;
+      this.setEmailInCookie(this.userRole);
     }
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    if (this.userIsAuthenticated) {
+      this.getProfile();
+    }
+    this.startCountdown();
+  }
+
+  setEmailInCookie(email: string) {
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 7); // Cookie will expire in 7 days
+    this.cookieService.set('userEmail', email, expires, '/');
+  }
+
+
+  getEmailFromCookie(): string {
+    return this.cookieService.get('userEmail');
+  }
+  
+
+  deleteEmailCookie() {
+    this.cookieService.delete('userEmail', '/');
+  }
+  
 
     getProfile() {
       this.profileService.getProfileByCreatorId().subscribe(prof => {

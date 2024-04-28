@@ -41,6 +41,9 @@ import { AdminService } from 'src/services/admin.service';
 import { ProfileComponent } from 'src/components/profile/profile';
 import { GainsComponent } from 'src/components/gains/gains';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { CookieService } from 'ngx-cookie-service';
+import { CookiesComponent } from 'src/components/cookies/cookies';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -58,6 +61,7 @@ const appRoutes: Routes = [
     DialogComponent,
     ProfileComponent,
     GainsComponent,
+    CookiesComponent,
     //Views
     LegalsInformations,
     PrivacyPolicy,
@@ -91,11 +95,13 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MatGridListModule,
+    MatSnackBarModule,
     RouterModule.forRoot([], {
     //initialNavigation: 'enabledBlocking'
 }),
   ],
   providers: [
+    CookieService,
     AdminService,
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },

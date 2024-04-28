@@ -48,7 +48,16 @@ export class AuthService {
     private errorHandlerService: ErrorHandlerService,
     private router: Router,
     // private toastr: ToastrService
-  ) { }
+  ) {
+    // Retrieve token from local storage upon initialization
+    this.token = localStorage.getItem("token");
+    
+    // Check if token exists and update authentication status accordingly
+    this.isAuthenticated = !!this.token;
+    // Notify subscribers about the authentication status
+    this.authStatusListener.next(this.isAuthenticated);
+  }
+  
 
 // Store user data upon login
 saveUserData(userData: any) {
@@ -136,10 +145,12 @@ getUserRole(): string {
           this.userId = tokenObject.userId;
           this.clearLocalStorage();
 
-          localStorage.setItem("role", tokenObject.token);
-          localStorage.setItem("token", "your_new_token");
-          localStorage.setItem("userId", "your_new_userId");
-          localStorage.setItem("token", tokenObject.token);
+        
+ localStorage.setItem("token", tokenObject.token);
+ // Store user details as needed; for example:
+ localStorage.setItem("user", JSON.stringify(tokenObject.user));
+ 
+          
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
           CacheHandler.storeLoginData(tokenObject);
@@ -328,23 +339,20 @@ getUserRole(): string {
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.clearLocalStorage();
-
+  
     // Redirection vers la page de connexion
-    this.router.navigate(["/"]).then(() => {
-        window.location.reload(); // Rafraîchit la page après la redirection
+    this.router.navigate(["/home"]).then(() => {
+      window.location.reload(); // Rafraîchit la page après la redirection
     });
-}
+  }
+  
 
   private clearAuthData() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expiration");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("role");
-    localStorage.removeItem("user");
-
-    localStorage.removeItem("profile");
-    localStorage.removeItem("uname");
+    for (const key in localStorage) {
+      if (key !== 'cookiesAccepted') {
+        localStorage.removeItem(key);
+      }
+    }
   }
 }
 

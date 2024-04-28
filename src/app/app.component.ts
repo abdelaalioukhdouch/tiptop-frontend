@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DashboardService } from '../services/dashboard.service';
 import { DialogComponent } from './dialog/dialog.component';
+import { CookiesComponent } from 'src/components/cookies/cookies';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,24 @@ export class AppComponent {
     private dialog: MatDialog,
   ) {
     this.initGlobalDialog();
+  }
+
+
+  ngOnInit() {
+    this.showCookieConsent();
+  }
+
+
+  showCookieConsent() {
+    const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+    if (!cookiesAccepted) {
+      const dialogRef = this.dialog.open(CookiesComponent, {
+        width: '400px'
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }
   }
 
   /* ============================================================================================================ */
