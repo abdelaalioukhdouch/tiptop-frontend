@@ -1,0 +1,37 @@
+# This section is for allowing everything to all crawlers
+User-agent: *
+Disallow: 
+
+# Block all crawlers from accessing anything under these directories
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /junk/
+
+# Prevent crawlers from indexing certain file types that are not useful for search engines
+Disallow: /*.pdf$
+Disallow: /*.doc$
+Disallow: /*.docx$
+Disallow: /*.zip$
+
+# Prevent crawlers from indexing pages that handle sensitive user information
+Disallow: /account/
+Disallow: /checkout/
+Disallow: /user-profile/
+
+# Allow Google's image crawler to access all images
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Disallow all bots from accessing the admin section of the site
+User-agent: *
+Disallow: /admin/
+
+# Block a specific bad bot that is known to ignore robots.txt rules and causes issues
+User-agent: BadBot
+Disallow: /
+
+# Point to the sitemap to help crawlers index the site more effectively
+Sitemap: https://tiptipfront.azurewebsites.net/sitemap.xml
+
+# Allow only the main page to be crawled
+Allow: /index.html

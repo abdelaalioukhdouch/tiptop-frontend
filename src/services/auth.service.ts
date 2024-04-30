@@ -59,6 +59,13 @@ export class AuthService {
   }
   
 
+  //test unit
+
+  authenticate() {
+    console.log('Authentication successful!');
+  }
+
+
 // Store user data upon login
 saveUserData(userData: any) {
   localStorage.setItem('userData', JSON.stringify(userData));
@@ -155,7 +162,7 @@ getUserRole(): string {
           this.authStatusListener.next(true);
           CacheHandler.storeLoginData(tokenObject);
           this.isUserLoggedIn$.next(true);
-          this.router.navigate(["/home"]);
+          //this.router.navigate(["/home"]);
           
         }),
         catchError(
