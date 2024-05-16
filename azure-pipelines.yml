@@ -32,6 +32,26 @@ stages:
         npm run build --if-present
       displayName: 'npm install, build'
 
+
+    - script: |
+        npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
+      displayName: 'Run Unit Tests'
+      continueOnError: false
+
+    # Add this step to list all files in the working directory
+    - script: |
+        echo "Listing all files in the working directory..."
+        ls -R $(System.DefaultWorkingDirectory)
+      displayName: 'List files in working directory'
+
+    - task: PublishTestResults@2
+      displayName: 'Publish Test Results'
+      inputs:
+        testResultsFiles: '**/test-results.xml'
+        testRunTitle: 'Publish Test Results'
+        searchFolder: '$(System.DefaultWorkingDirectory)'
+      condition: succeededOrFailed()
+
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
