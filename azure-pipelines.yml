@@ -32,6 +32,8 @@ stages:
         npm run build --if-present
       displayName: 'npm install, build'
 
+    - script: npx cypress run
+      displayName: 'Run functional tests'
 
     - script: |
         npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
