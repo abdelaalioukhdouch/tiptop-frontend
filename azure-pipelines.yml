@@ -32,6 +32,19 @@ stages:
         npm run build --if-present
       displayName: 'npm install, build'
 
+    - script: |
+        npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
+      displayName: 'Run Unit Tests'
+      continueOnError: false # true to continue the pipeline even if tests fail
+
+    - task: PublishTestResults@2
+      displayName: 'Publish Test Results'
+      inputs:
+        testResultsFiles: '**/test-results.xml'
+        testRunTitle: 'Publish Test Results'
+        searchFolder: '$(System.DefaultWorkingDirectory)'
+      condition: succeededOrFailed()
+
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
