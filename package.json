@@ -10,6 +10,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:ci": "ng test --watch=false --no-progress --browsers=ChromeHeadlessCI",
     "dev:ssr": "ng run projectdsp:serve-ssr",
     "serve:ssr": "node dist/projectdsp/server/main.js",
     "build:ssr": "ng build && ng run projectdsp:server",
@@ -64,6 +65,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "karma-junit-reporter": "^2.0.1",
     "typescript": "~4.6.2"
   }
 }
