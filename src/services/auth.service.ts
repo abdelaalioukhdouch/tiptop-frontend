@@ -348,9 +348,9 @@ getUserRole(): string {
     this.clearAuthData();
   
     // Redirection vers la page de connexion
-    this.router.navigate(["/"]).then(() => {
-      window.location.reload(); // Rafraîchit la page après la redirection
-    });
+    // this.router.navigate(["/"]).then(() => {
+    //   window.location.reload(); // Rafraîchit la page après la redirection
+    // });
   }
   
 
