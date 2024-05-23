@@ -2,13 +2,8 @@ trigger:
 - main
 
 variables:
-  # Web app name
   webAppName: 'tiptipfront'
-
-  # Environment name
   environmentName: 'tiptipfront'
-
-  # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
 stages:
@@ -40,7 +35,6 @@ stages:
       displayName: 'Run Unit Tests'
       continueOnError: false
 
-    # List all files in the working directory to verify the build and web.config placement
     - script: |
         echo "Listing all files in the working directory..."
         ls -R $(System.DefaultWorkingDirectory)/dist/projectdsp/browser
