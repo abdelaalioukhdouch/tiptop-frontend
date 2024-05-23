@@ -61,7 +61,7 @@ const appRoutes: Routes = [
     DialogComponent,
     ProfileComponent,
     GainsComponent,
-    CookiesComponent,
+    //CookiesComponent,
     //Views
     LegalsInformations,
     PrivacyPolicy,
@@ -101,7 +101,7 @@ const appRoutes: Routes = [
 }),
   ],
   providers: [
-    CookieService,
+    //CookieService,
     AdminService,
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },

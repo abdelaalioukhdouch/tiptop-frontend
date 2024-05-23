@@ -36,8 +36,7 @@ export class HomeComponent implements OnInit {
     title = 'cookie-demo';
 
     constructor(
-      private userDataService: UserDataService,
-      private cookieService: CookieService,public dialog: MatDialog, private authService: AuthService, private profileService: ProfileService) { 
+      private userDataService: UserDataService,public dialog: MatDialog, private authService: AuthService, private profileService: ProfileService) { 
       const currentDate = new Date();
       currentDate.setDate(currentDate.getDate() + 20); // Add 20 days to the current date
       this.targetDate = currentDate.getTime();
@@ -47,23 +46,23 @@ export class HomeComponent implements OnInit {
       this.user = this.userDataService.retrieveUserDataFromCookie();
     }
   
-    clearUserData() {
-      this.userDataService.clearUserDataCookie();
-    }
-    setCookie() {
-      this.cookieService.set('TestCookie', 'Hello World', 4, '/');
-      console.log('Cookie set');
-    }
+    // clearUserData() {
+    //   this.userDataService.clearUserDataCookie();
+    // }
+    // setCookie() {
+    //   this.cookieService.set('TestCookie', 'Hello World', 4, '/');
+    //   console.log('Cookie set');
+    // }
   
-    getCookie() {
-      const cookieValue = this.cookieService.get('TestCookie');
-      console.log('Cookie value:', cookieValue);
-    }
+    // getCookie() {
+    //   const cookieValue = this.cookieService.get('TestCookie');
+    //   console.log('Cookie value:', cookieValue);
+    // }
   
-    deleteCookie() {
-      this.cookieService.delete('TestCookie');
-      console.log('Cookie deleted');
-    }
+    // deleteCookie() {
+    //   this.cookieService.delete('TestCookie');
+    //   console.log('Cookie deleted');
+    // }
 
     ngOnDestroy() {
       if (this.interval) {
@@ -112,7 +111,7 @@ export class HomeComponent implements OnInit {
     this.currentUser = this.authService.getUserData(); // Assuming this returns user data
     if (this.currentUser) {
       this.userRole = this.currentUser.role;
-      this.setEmailInCookie(this.userRole);
+      //this.setEmailInCookie(this.userRole);
     }
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated) {
@@ -121,21 +120,21 @@ export class HomeComponent implements OnInit {
     this.startCountdown();
   }
 
-  setEmailInCookie(email: string) {
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 7); // Cookie will expire in 7 days
-    this.cookieService.set('userEmail', email, expires, '/');
-  }
+  // setEmailInCookie(email: string) {
+  //   const expires = new Date();
+  //   expires.setDate(expires.getDate() + 7); // Cookie will expire in 7 days
+  //   this.cookieService.set('userEmail', email, expires, '/');
+  // }
 
 
-  getEmailFromCookie(): string {
-    return this.cookieService.get('userEmail');
-  }
+  // getEmailFromCookie(): string {
+  //   return this.cookieService.get('userEmail');
+  // }
   
 
-  deleteEmailCookie() {
-    this.cookieService.delete('userEmail', '/');
-  }
+  // deleteEmailCookie() {
+  //   this.cookieService.delete('userEmail', '/');
+  // }
   
 
     getProfile() {
