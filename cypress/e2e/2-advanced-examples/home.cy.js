@@ -3,7 +3,7 @@
 describe('Home Page', () => {
     beforeEach(() => {
       // Visit the home page
-      cy.visit('http://localhost:4200/'); // Replace with the actual URL of your home page
+      cy.visit('https://tiptipfront.azurewebsites.net/'); // Replace with the actual URL of your home page
     });
   
     it('should display the hero section correctly', () => {
