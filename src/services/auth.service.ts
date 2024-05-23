@@ -339,13 +339,13 @@ getUserRole(): string {
 
 
   logout() {
-    localStorage.clear();
+    //localStorage.clear();
     this.token = null;
     this.user = null;
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
-    this.clearAuthData();
+    //this.clearAuthData();
   
     // Redirection vers la page de connexion
     // this.router.navigate(["/"]).then(() => {
