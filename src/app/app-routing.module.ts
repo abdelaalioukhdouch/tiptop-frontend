@@ -49,7 +49,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./../modules/admin/admin-home/admin-home.module').then(m => m.AdminHomeModule)
   },
-  { path: "**", redirectTo: "/" },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
