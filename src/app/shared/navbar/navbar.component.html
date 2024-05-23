@@ -61,7 +61,7 @@
 <li class="nav-item dropdown" *ngIf="userIsAuthenticated">
           <a class="nav-link no-caret" data-toggle="dropdown" role="button">
             <i class="ni ni-collection d-lg-none"></i>
-            <span class="nav-link-inner--text" >Mon compte {{userRole}}</span>
+            <span class="nav-link-inner--text" >Mon compte</span>
           </a>
           <div class="dropdown-menu">
             <a [routerLink]="['/admin']" *ngIf="userRole !== 'user'" class="dropdown-item">Dashboard</a>
