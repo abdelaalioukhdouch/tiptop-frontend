@@ -28,8 +28,8 @@ stages:
 
     - script: |
         npm install
-        npm run build --if-present
-        cp src/web.config dist/projectdsp/browser
+        npm run build -- --prod
+        cp src/web.config dist/projectdsp
       displayName: 'npm install, build, and prepare web.config'
 
     - script: npx cypress run
@@ -50,21 +50,13 @@ stages:
     # List all files in the working directory to verify the build and web.config placement
     - script: |
         echo "Listing all files in the working directory..."
-        ls -R $(System.DefaultWorkingDirectory)/dist/projectdsp/browser
+        ls -R $(System.DefaultWorkingDirectory)/dist/projectdsp
       displayName: 'List files in working directory'
-
-    - task: PublishTestResults@2
-      displayName: 'Publish Test Results'
-      inputs:
-        testResultsFiles: '**/test-results.xml'
-        testRunTitle: 'Publish Test Results'
-        searchFolder: '$(System.DefaultWorkingDirectory)'
-      condition: succeededOrFailed()
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist/projectdsp/browser'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist/projectdsp'
         includeRootFolder: false
         archiveType: zip
         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
@@ -89,6 +81,11 @@ stages:
           steps:
           - download: current
             artifact: drop
+
+          - script: |
+              npm install -g http-server-spa
+              http-server-spa $(Pipeline.Workspace)/drop/$(Build.BuildId)/dist/projectdsp index.html 8080
+            displayName: 'Start http-server-spa'
 
           - task: AzureWebApp@1
             displayName: 'Azure Web App Deploy: tiptipfront'
