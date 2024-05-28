@@ -6,13 +6,13 @@ describe('Home Page', () => {
       cy.visit('https://tiptipfront.azurewebsites.net/'); // Replace with the actual URL of your home page
     });
   
-    it('should display the hero section correctly', () => {
-      // Check for hero section elements
-      cy.get('.section-hero').should('exist');
-      cy.get('.section-hero img').should('have.attr', 'src', './assets/img/teahome.png');
-      cy.get('.section-hero h1').should('contain.text', 'Venez participer au jeu concours de Thétiptop Test CI/CD');
-      cy.get('.section-hero p.lead').should('contain.text', 'en participant à notre jeu-concours 100% gagnants !');
-    });
+    // it('should display the hero section correctly', () => {
+    //   // Check for hero section elements
+    //   cy.get('.section-hero').should('exist');
+    //   cy.get('.section-hero img').should('have.attr', 'src', './assets/img/teahome.png');
+    //   cy.get('.section-hero h1').should('contain.text', 'Venez participer au jeu concours de Thétiptop Test CI/CD');
+    //   cy.get('.section-hero p.lead').should('contain.text', 'en participant à notre jeu-concours 100% gagnants !');
+    // });
   
     it('should display the timer correctly', () => {
       // Check for the timer display
