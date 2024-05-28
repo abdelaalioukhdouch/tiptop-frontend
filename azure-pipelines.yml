@@ -84,7 +84,7 @@ stages:
 
           - script: |
               npm install -g http-server-spa
-              http-server-spa $(Pipeline.Workspace)/drop/$(Build.BuildId)/dist/projectdsp/browser index.html 8080
+              http-server-spa $(Pipeline.Workspace)/drop/$(Build.BuildId)/dist/projectdsp index.html 8080
             displayName: 'Start http-server-spa'
 
           - task: AzureWebApp@1
