@@ -29,7 +29,7 @@ stages:
     - script: |
         npm install
         npm run build -- --prod
-        cp src/web.config $(System.DefaultWorkingDirectory)/dist/projectdsp/browser
+        cp src/web.config dist/projectdsp
       displayName: 'npm install, build, and prepare web.config'
 
     - script: npx cypress run
@@ -56,7 +56,7 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist/projectdsp/browser'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist/projectdsp'
         includeRootFolder: false
         archiveType: zip
         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
