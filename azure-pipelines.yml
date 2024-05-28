@@ -39,6 +39,13 @@ stages:
         npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
       displayName: 'Run Unit Tests'
       continueOnError: false
+    
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/coverage/test-results.xml'
+        failTaskOnFailedTests: true
+      displayName: 'Publish test results'
 
     # List all files in the working directory to verify the build and web.config placement
     - script: |
