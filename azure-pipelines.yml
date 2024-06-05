@@ -59,7 +59,7 @@ stages:
         testResultsFiles: '**/test-results.xml'
         testRunTitle: 'Publish Test Results'
         searchFolder: '$(System.DefaultWorkingDirectory)'
-      condition: succeededOrFailed()
+        condition: succeededOrFailed()
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
