@@ -38,7 +38,7 @@ stages:
     - script: |
         npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
       displayName: 'Run Unit Tests'
-      continueOnError: false
+      # continueOnError: false
     
     - task: PublishTestResults@2
       inputs:
@@ -59,7 +59,7 @@ stages:
         testResultsFiles: '**/test-results.xml'
         testRunTitle: 'Publish Test Results'
         searchFolder: '$(System.DefaultWorkingDirectory)'
-      condition: succeededOrFailed()
+      # condition: succeededOrFailed()
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
